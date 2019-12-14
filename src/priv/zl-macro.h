@@ -17,16 +17,16 @@
     } \
   } while(0)
 
-#define zl_ret_if_param(expr) \
+#define zl_ret_if_fail(expr) \
   do { \
-    if ((expr)) { \
+    if (!(expr)) { \
       return; \
     } \
   } while(0)
 
-#define zl_ret_val_if_param(expr, val) \
+#define zl_ret_val_if_fail(expr, val) \
   do { \
-    if ((expr)) { \
+    if (!(expr)) { \
       return val; \
     } \
   } while(0)
