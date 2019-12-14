@@ -1,16 +1,16 @@
 #ifndef __ZL_LIST_H__
 #define __ZL_LIST_H__
 
-#include <zl-tlv-type.h>
-
 #include <stdio.h>
+
+#include <zl-tlv-type.h>
 
 typedef struct _zl_list_t zl_list_t;
 typedef struct _zl_elem_t zl_elem_t;
 
 struct _zl_list_t
 {
-  size_t length;
+  size_t    length;
   zl_elem_t *head;
   zl_elem_t *tail;
 };
@@ -18,6 +18,7 @@ struct _zl_list_t
 struct _zl_elem_t
 {
   zl_elem_t *next;
+  void      *payload;
 };
 
 zl_list_t * zl_list_new         (void);
