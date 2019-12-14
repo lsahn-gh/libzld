@@ -25,19 +25,19 @@ zl_realloc (void *ptr, size_t size)
 void
 zl_free (void *ptr)
 {
-  zl_ret_if_param (ptr == NULL);
+  zl_ret_if_fail (ptr != NULL);
 
   free (ptr);
 }
 
 void *
-zl_memcpy (void *dest, const void *src, size_t n)
+zl_memcpy (void *dest, const void *src, size_t nbytes)
 {
-  zl_ret_val_if_param (dest == NULL, NULL);
-  zl_ret_val_if_param (src == NULL, NULL);
-  zl_ret_val_if_param (n == 0, NULL);
+  zl_ret_val_if_fail (dest != NULL, NULL);
+  zl_ret_val_if_fail (src != NULL, NULL);
+  zl_ret_val_if_fail (nbytes != 0, NULL);
 
-  return memcpy (dest, src, n);
+  return memcpy (dest, src, nbytes);
 }
 
 void *
@@ -45,8 +45,8 @@ zl_memdup (void *src, size_t nbytes)
 {
   void *new_elem;
 
-  zl_ret_val_if_param (src == NULL, NULL);
-  zl_ret_val_if_param (nbytes == 0, NULL);
+  zl_ret_val_if_fail (src != NULL, NULL);
+  zl_ret_val_if_fail (nbytes != 0, NULL);
 
   new_elem = zl_calloc (1, nbytes);
   zl_ret_val_if (new_elem == NULL, NULL);
