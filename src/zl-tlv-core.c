@@ -36,6 +36,14 @@ zl_tlv_end_lldpdu_new (void)
   return new_tlv;
 }
 
+void
+zl_tlv_end_lldpdu_free (zl_tlv_end_lldpdu_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  zl_free (tlv);
+}
+
 zl_tlv_chassis_id_t *
 zl_tlv_chassis_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
 {
@@ -56,6 +64,17 @@ zl_tlv_chassis_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
   new_tlv->value = zl_memdup (src, nbytes);
 
   return new_tlv;
+}
+
+void
+zl_tlv_chassis_id_free (zl_tlv_chassis_id_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->value)
+    zl_free (tlv->value);
+
+  zl_free (tlv);
 }
 
 zl_tlv_port_id_t *
@@ -80,6 +99,17 @@ zl_tlv_port_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
   return new_tlv;
 }
 
+void
+zl_tlv_port_id_free (zl_tlv_port_id_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->value)
+    zl_free (tlv->value);
+
+  zl_free (tlv);
+}
+
 zl_tlv_ttl_t *
 zl_tlv_ttl_new (uint16_t src)
 {
@@ -96,6 +126,14 @@ zl_tlv_ttl_new (uint16_t src)
   new_tlv->value = src;
 
   return new_tlv;
+}
+
+void
+zl_tlv_ttl_free (zl_tlv_ttl_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  zl_free (tlv);
 }
 
 zl_tlv_port_desc_t *
@@ -119,6 +157,17 @@ zl_tlv_port_desc_new (uint8_t *src, size_t nbytes)
   return new_tlv;
 }
 
+void
+zl_tlv_port_desc_free (zl_tlv_port_desc_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->value)
+    zl_free (tlv->value);
+
+  zl_free (tlv);
+}
+
 zl_tlv_sys_name_t *
 zl_tlv_sys_name_new (uint8_t *src, size_t nbytes)
 {
@@ -138,6 +187,17 @@ zl_tlv_sys_name_new (uint8_t *src, size_t nbytes)
   new_tlv->value = zl_memdup (src, nbytes);
 
   return new_tlv;
+}
+
+void
+zl_tlv_sys_name_free (zl_tlv_sys_name_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->value)
+    zl_free (tlv->value);
+
+  zl_free (tlv);
 }
 
 zl_tlv_sys_desc_t *
@@ -161,6 +221,17 @@ zl_tlv_sys_desc_new (uint8_t *src, size_t nbytes)
   return new_tlv;
 }
 
+void
+zl_tlv_sys_desc_free (zl_tlv_sys_desc_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->value)
+    zl_free (tlv->value);
+
+  zl_free (tlv);
+}
+
 zl_tlv_sys_cap_t *
 zl_tlv_sys_capabilities_new (uint16_t sys_caps, uint16_t enabled_caps)
 {
@@ -178,6 +249,14 @@ zl_tlv_sys_capabilities_new (uint16_t sys_caps, uint16_t enabled_caps)
   new_tlv->enabled_caps = enabled_caps;
 
   return new_tlv;
+}
+
+void
+zl_tlv_sys_capabilities_free (zl_tlv_sys_cap_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  zl_free (tlv);
 }
 
 zl_tlv_mgmt_addr_t *
@@ -213,4 +292,18 @@ zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
   new_tlv->oid_value = zl_memdup (oid_str_val, oid_str_len);
 
   return new_tlv;
+}
+
+void
+zl_tlv_mgmt_addr_free (zl_tlv_mgmt_addr_t *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  if (tlv->addr_value)
+    zl_free (tlv->addr_value);
+
+  if (tlv->oid_value)
+    zl_free (tlv->oid_value);
+
+  zl_free (tlv);
 }
