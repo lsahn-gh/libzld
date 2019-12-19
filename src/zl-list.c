@@ -1,3 +1,20 @@
+/* zl-list.c
+ *
+ * Copyright 2019 Leesoo Ahn <yisooan@fedoraproject.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include <priv/zl-macro.h>
 #include <priv/zl-mem.h>
 
@@ -16,13 +33,13 @@ zl_list_new (void)
 }
 
 zl_list_t *
-zl_list_insert_head (zl_list_t *object, zl_tlv_t *tlv)
+zl_list_insert_head (zl_list_t *object, void *tlv)
 {
   zl_list_t *self;
   zl_elem_t *elem;
 
-  zl_ret_val_if_param (object == NULL, NULL);
-  zl_ret_val_if_param (tlv == NULL, NULL);
+  zl_ret_val_if_fail (object != NULL, NULL);
+  zl_ret_val_if_fail (tlv != NULL, NULL);
 
   self = object;
   elem = (zl_elem_t *)tlv;
@@ -42,13 +59,13 @@ zl_list_insert_head (zl_list_t *object, zl_tlv_t *tlv)
 }
 
 zl_list_t *
-zl_list_insert_tail (zl_list_t *object, zl_tlv_t *tlv)
+zl_list_insert_tail (zl_list_t *object, void *tlv)
 {
   zl_list_t *self;
   zl_elem_t *elem;
 
-  zl_ret_val_if_param (object == NULL, NULL);
-  zl_ret_val_if_param (tlv == NULL, NULL);
+  zl_ret_val_if_fail (object != NULL, NULL);
+  zl_ret_val_if_fail (tlv != NULL, NULL);
 
   self = object;
   elem = (zl_elem_t *)tlv;
@@ -69,10 +86,10 @@ zl_list_insert_tail (zl_list_t *object, zl_tlv_t *tlv)
 }
 
 zl_list_t *
-zl_list_enqueue (zl_list_t *object, zl_tlv_t *tlv)
+zl_list_enqueue (zl_list_t *object, void *tlv)
 {
-  zl_ret_val_if_param (object == NULL, NULL);
-  zl_ret_val_if_param (tlv == NULL, NULL);
+  zl_ret_val_if_fail (object != NULL, NULL);
+  zl_ret_val_if_fail (tlv != NULL, NULL);
 
   return zl_list_insert_tail (object, tlv);
 }
@@ -83,7 +100,7 @@ zl_list_dequeue (zl_list_t *object)
   zl_list_t *self;
   zl_elem_t *elem = NULL;
 
-  zl_ret_val_if_param (object == NULL, NULL);
+  zl_ret_val_if_fail (object != NULL, NULL);
 
   self = object;
 
@@ -102,7 +119,7 @@ zl_list_is_empty (zl_list_t *object)
 {
   zl_list_t *self;
 
-  zl_ret_val_if_param (object == NULL, 0);
+  zl_ret_val_if_fail (object != NULL, 0);
 
   return self->length == 0;
 }
