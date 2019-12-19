@@ -1,4 +1,4 @@
-/* zl-tlv.h
+/* zl-tlv-common.h
  *
  * Copyright 2019 Leesoo Ahn <yisooan@fedoraproject.org>
  *
@@ -15,13 +15,13 @@
  * limitations under the License.
  */
 
-#ifndef __ZL_TLV_H__
-#define __ZL_TLV_H__
+#ifndef __ZL_TLV_COMMON_H__
+#define __ZL_TLV_COMMON_H__
 
 #include <stdint.h>
 
 #include <priv/zl-macro.h>
-#include <zl-list.h>
+#include <zl-object.h>
 
 enum
 {
@@ -44,34 +44,23 @@ enum
   TLV_ORG_SPECIFIC = 127
 };
 
-/* -- Object Type -- */
-typedef struct _zl_obj_t zl_obj_t;
-struct _zl_obj_t
+/* -- Common Type -- */
+typedef struct _zl_tlv_cmn_t zl_tlv_cmn_t;
+struct _zl_tlv_cmn_t
 {
-  void *next;
-  /* TODO
-   * 1. Pack function pointer here
-   * 2. Unpack function pointer here
-   */
-} zl_1byte_pack;
-
-/* -- Parent Type -- */
-typedef struct _zl_tlv_t zl_tlv_t;
-struct _zl_tlv_t
-{
-  zl_obj_t  priv;
-  uint8_t   type : 7;
-  uint16_t  length : 9;
+  zl_obj_t   priv;
+  uint8_t    type : 7;
+  uint16_t   length : 9;
 } zl_1byte_pack;
 
 /* -- Organizationally Specific TLV Type -- */
 typedef struct _zl_tlv_org_t zl_tlv_org_t;
 struct _zl_tlv_org_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint8_t   oui[3];
-  uint8_t   subtype;
+  uint8_t       oui[3];
+  uint8_t       subtype;
 } zl_1byte_pack;
 
 #endif
