@@ -22,16 +22,16 @@
 
 #include <priv/zl-macro.h>
 #include <zl-list.h>
-#include <zl-tlv.h>
+#include <zl-tlv-common.h>
 
 /* -- End Of LLDPDU (Mandatory) -- */
-typedef zl_tlv_t zl_tlv_end_lldpdu_t;
+typedef zl_tlv_cmn_t zl_tlv_end_lldpdu_t;
 
 /* -- Chassis ID (Mandatory) -- */
 typedef struct _zl_tlv_chassis_id_t zl_tlv_chassis_id_t;
 struct _zl_tlv_chassis_id_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
   /* 0: Reserved
    * 1: Chassis component
@@ -43,15 +43,15 @@ struct _zl_tlv_chassis_id_t
    * 7: Locally assigned
    * 8-255: Reserved
    */
-  uint8_t   subtype;
-  uint8_t   *value;
+  uint8_t       subtype;
+  uint8_t       *value;
 } zl_1byte_pack;
 
 /* -- Port ID (Mandatory) -- */
 typedef struct _zl_tlv_port_id_t zl_tlv_port_id_t;
 struct _zl_tlv_port_id_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
   /* 0: Reserved
    * 1: Interface alias
@@ -63,51 +63,51 @@ struct _zl_tlv_port_id_t
    * 7: Locally assigned
    * 8-255: Reserved
    */
-  uint8_t   subtype;
-  uint8_t   *value;
+  uint8_t       subtype;
+  uint8_t       *value;
 } zl_1byte_pack;
 
 /* -- Time To Live (Mandatory) -- */
 typedef struct _zl_tlv_ttl_t zl_tlv_ttl_t;
 struct _zl_tlv_ttl_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint16_t  value;
+  uint16_t      value;
 } zl_1byte_pack;
 
 /* -- Port Description (Optional) -- */
 typedef struct _zl_tlv_port_desc_t zl_tlv_port_desc_t;
 struct _zl_tlv_port_desc_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint8_t   *value;
+  uint8_t       *value;
 } zl_1byte_pack;
 
 /* -- System Name (Optional) -- */
 typedef struct _zl_tlv_sys_name_t zl_tlv_sys_name_t;
 struct _zl_tlv_sys_name_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint8_t   *value;
+  uint8_t       *value;
 } zl_1byte_pack;
 
 /* -- System Description (Optional) -- */
 typedef struct _zl_tlv_sys_desc_t zl_tlv_sys_desc_t;
 struct _zl_tlv_sys_desc_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint8_t   *value;
+  uint8_t       *value;
 } zl_1byte_pack;
 
 /* -- System Capabilities (Optional) -- */
 typedef struct _zl_tlv_sys_cap_t zl_tlv_sys_cap_t;
 struct _zl_tlv_sys_cap_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
   /* .... .... .... ...X : Other
    * .... .... .... ..X. : Repeater
@@ -118,27 +118,27 @@ struct _zl_tlv_sys_cap_t
    * .... .... .X.. .... : DOCSIS cable device
    * .... .... X... .... : Station Only
    * XXXX XXXX .... .... : Reserved */
-  uint16_t  sys_caps;
+  uint16_t      sys_caps;
   /* Functionalities of each bits are the same as system capabilities */
-  uint16_t  enabled_caps;
+  uint16_t      enabled_caps;
 } zl_1byte_pack;
 
 /* -- Management Address (Optional) -- */
 typedef struct _zl_tlv_mgmt_addr_t zl_tlv_mgmt_addr_t;
 struct _zl_tlv_mgmt_addr_t
 {
-  zl_tlv_t  parent;
+  zl_tlv_cmn_t  parent;
 
-  uint8_t   addr_len;
+  uint8_t       addr_len;
   /* Management Address String */
-  uint8_t   addr_subtype;
-  uint8_t   *addr_value;
+  uint8_t       addr_subtype;
+  uint8_t       *addr_value;
 
-  uint8_t   iface_subtype;
-  uint32_t  iface_number;
+  uint8_t       iface_subtype;
+  uint32_t      iface_number;
 
-  uint8_t   oid_len;
-  uint8_t   *oid_value;
+  uint8_t       oid_len;
+  uint8_t       *oid_value;
 } zl_1byte_pack;
 
 #endif
