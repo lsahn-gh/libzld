@@ -16,108 +16,255 @@
  */
 
 #include <string.h>
+#include <arpa/inet.h>
 
 #include <priv/zl-mem.h>
+#include <zl-object.h>
 #include <zl-tlv-core.h>
 
-zl_tlv_end_lldpdu_t *
+/* -- End Of LLDPDU -- */
+static int
+zl_tlv_end_lldpdu_serialize (char *dst_buf, const void *src_tlv)
+{
+  int size;
+  const zl_tlv_end_lldpdu_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  obj = (zl_tlv_end_lldpdu_t *)src_tlv;
+
+  size = sizeof(*obj);
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_end_lldpdu_free (void *tlv)
+{
+  zl_tlv_end_lldpdu_t *obj;
+
+  zl_ret_if_fail (tlv != NULL);
+
+  obj = (zl_tlv_end_lldpdu_t *)tlv;
+
+  zl_free (obj);
+}
+
+zl_object_t *
 zl_tlv_end_lldpdu_new (void)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_end_lldpdu_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_end_lldpdu_t *new_tlv = NULL;
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_END_OF_LLDPDU;
   common->length = 0;
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_end_lldpdu_serialize,
+                                          NULL,
+                                          zl_tlv_end_lldpdu_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_end_lldpdu_free (zl_tlv_end_lldpdu_t *tlv)
+
+/* -- Chassis ID -- */
+static int
+zl_tlv_chassis_id_serialize (char *dst_buf, const void *src_tlv)
 {
+  int size;
+  const zl_tlv_cmn_t *common;
+  const zl_tlv_chassis_id_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_chassis_id_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_chassis_id_free (void *tlv)
+{
+  zl_tlv_chassis_id_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  zl_free (tlv);
+  obj = (zl_tlv_chassis_id_t *)tlv;
+
+  zl_free (obj);
 }
 
-zl_tlv_chassis_id_t *
+zl_object_t *
 zl_tlv_chassis_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_chassis_id_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_chassis_id_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (src != NULL, NULL);
   zl_ret_val_if_fail (0 < nbytes && nbytes < 256, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_CHASSIS_ID;
   common->length = 1 + nbytes;
 
   new_tlv->subtype = subtype;
-  new_tlv->value = zl_memdup (src, nbytes);
+  zl_memcpy (new_tlv->value, src, nbytes);
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_chassis_id_serialize,
+                                          NULL,
+                                          zl_tlv_chassis_id_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_chassis_id_free (zl_tlv_chassis_id_t *tlv)
+
+/* -- Port ID -- */
+static int
+zl_tlv_port_id_serialize (char *dst_buf, const void *src_tlv)
 {
+  int size;
+  const zl_tlv_cmn_t *common;
+  const zl_tlv_port_id_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_port_id_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_port_id_free (void *tlv)
+{
+  zl_tlv_port_id_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  if (tlv->value)
-    zl_free (tlv->value);
+  obj = (zl_tlv_port_id_t *)tlv;
 
-  zl_free (tlv);
+  zl_free (obj);
 }
 
-zl_tlv_port_id_t *
+zl_object_t *
 zl_tlv_port_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_port_id_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_port_id_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (src != NULL, NULL);
   zl_ret_val_if_fail (0 < nbytes && nbytes < 256, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_PORT_ID;
   common->length = 1 + nbytes;
 
   new_tlv->subtype = subtype;
-  new_tlv->value = zl_memdup (src, nbytes);
+  zl_memcpy (new_tlv->value, src, nbytes);
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_port_id_serialize,
+                                          NULL,
+                                          zl_tlv_port_id_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_port_id_free (zl_tlv_port_id_t *tlv)
+
+/* -- Time To Live -- */
+static int
+zl_tlv_ttl_serialize (char *dst_buf, void *src_tlv)
 {
+  int size;
+  uint16_t ttl_val;
+  zl_tlv_cmn_t *common;
+  zl_tlv_ttl_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_ttl_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  ttl_val = obj->value;
+  obj->value = htons (ttl_val);
+  zl_memcpy (dst_buf, obj, size);
+  obj->value = ttl_val;
+
+  return size;
+}
+
+static void
+zl_tlv_ttl_free (void *tlv)
+{
+  zl_tlv_ttl_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  if (tlv->value)
-    zl_free (tlv->value);
+  obj = (zl_tlv_ttl_t *)tlv;
 
-  zl_free (tlv);
+  zl_free (obj);
 }
 
-zl_tlv_ttl_t *
+zl_object_t *
 zl_tlv_ttl_new (uint16_t src)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_ttl_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_ttl_t *new_tlv = NULL;
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_TIME_TO_LIVE;
@@ -125,121 +272,275 @@ zl_tlv_ttl_new (uint16_t src)
 
   new_tlv->value = src;
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_ttl_serialize,
+                                          NULL,
+                                          zl_tlv_ttl_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_ttl_free (zl_tlv_ttl_t *tlv)
+
+/* -- Port Description -- */
+static int
+zl_tlv_port_desc_serialize (char *dst_buf, const void *src_tlv)
 {
+  int size;
+  const zl_tlv_cmn_t *common;
+  const zl_tlv_port_desc_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_port_desc_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_port_desc_free (void *tlv)
+{
+  zl_tlv_port_desc_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  zl_free (tlv);
+  obj = (zl_tlv_port_desc_t *)tlv;
+
+  zl_free (obj);
 }
 
-zl_tlv_port_desc_t *
+zl_object_t *
 zl_tlv_port_desc_new (uint8_t *src, size_t nbytes)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_port_desc_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_port_desc_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (src != NULL, NULL);
   zl_ret_val_if_fail (0 < nbytes && nbytes < 256, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_PORT_DESCRIPTION;
   common->length = nbytes;
 
-  new_tlv->value = zl_memdup (src, nbytes);
+  zl_memcpy (new_tlv->value, src, nbytes);
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_port_desc_serialize,
+                                          NULL,
+                                          zl_tlv_port_desc_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_port_desc_free (zl_tlv_port_desc_t *tlv)
+
+/* -- System Name -- */
+static int
+zl_tlv_sys_name_serialize (char *dst_buf, const void *src_tlv)
 {
+  int size;
+  const zl_tlv_cmn_t *common;
+  const zl_tlv_sys_name_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_sys_name_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_sys_name_free (void *tlv)
+{
+  zl_tlv_sys_name_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  if (tlv->value)
-    zl_free (tlv->value);
+  obj = (zl_tlv_sys_name_t *)tlv;
 
-  zl_free (tlv);
+  zl_free (obj);
 }
 
-zl_tlv_sys_name_t *
+zl_object_t *
 zl_tlv_sys_name_new (uint8_t *src, size_t nbytes)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_sys_name_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_sys_name_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (src != NULL, NULL);
   zl_ret_val_if_fail (0 < nbytes && nbytes < 256, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_SYSTEM_NAME;
   common->length = nbytes;
 
-  new_tlv->value = zl_memdup (src, nbytes);
+  zl_memcpy (new_tlv->value, src, nbytes);
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_sys_name_serialize,
+                                          NULL,
+                                          zl_tlv_sys_name_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_sys_name_free (zl_tlv_sys_name_t *tlv)
+
+/* -- System Description -- */
+static int
+zl_tlv_sys_desc_serialize (char *dst_buf, const void *src_tlv)
 {
+  int size;
+  const zl_tlv_cmn_t *common;
+  const zl_tlv_sys_desc_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_sys_desc_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  zl_memcpy (dst_buf, obj, size);
+
+  return size;
+}
+
+static void
+zl_tlv_sys_desc_free (void *tlv)
+{
+  zl_tlv_sys_desc_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  if (tlv->value)
-    zl_free (tlv->value);
+  obj = (zl_tlv_sys_desc_t *)tlv;
 
-  zl_free (tlv);
+  zl_free (obj);
 }
 
-zl_tlv_sys_desc_t *
+zl_object_t *
 zl_tlv_sys_desc_new (uint8_t *src, size_t nbytes)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_sys_desc_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_sys_desc_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (src != NULL, NULL);
   zl_ret_val_if_fail (0 < nbytes && nbytes < 256, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_SYSTEM_DESCRIPTION;
   common->length = nbytes;
 
-  new_tlv->value = zl_memdup (src, nbytes);
+  zl_memcpy (new_tlv->value, src, nbytes);
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_sys_desc_serialize,
+                                          NULL,
+                                          zl_tlv_sys_desc_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_sys_desc_free (zl_tlv_sys_desc_t *tlv)
+
+/* -- System Capabilities -- */
+static int
+zl_tlv_sys_capabilities_serialize (char *dst_buf, void *src_tlv)
 {
+  int size;
+  uint16_t sys_val,
+           enabled_val;
+  zl_tlv_cmn_t *common;
+  zl_tlv_sys_cap_t *obj;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_sys_cap_t *)src_tlv;
+
+  size = sizeof(*common) + common->length;
+
+  sys_val = obj->sys_caps;
+  enabled_val = obj->enabled_caps;
+
+  obj->sys_caps = htons (sys_val);
+  obj->enabled_caps = htons (enabled_val);
+  zl_memcpy (dst_buf, obj, size);
+
+  /* Rollback */
+  obj->sys_caps = sys_val;
+  obj->enabled_caps = enabled_val;
+
+  return size;
+}
+
+static void
+zl_tlv_sys_capabilities_free (void *tlv)
+{
+  zl_tlv_sys_cap_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  if (tlv->value)
-    zl_free (tlv->value);
+  obj = (zl_tlv_sys_cap_t *)tlv;
 
-  zl_free (tlv);
+  zl_free (obj);
 }
 
-zl_tlv_sys_cap_t *
+zl_object_t *
 zl_tlv_sys_capabilities_new (uint16_t sys_caps, uint16_t enabled_caps)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_sys_cap_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_sys_cap_t *new_tlv = NULL;
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_SYSTEM_CAPABILITIES;
@@ -248,18 +549,84 @@ zl_tlv_sys_capabilities_new (uint16_t sys_caps, uint16_t enabled_caps)
   new_tlv->sys_caps = sys_caps;
   new_tlv->enabled_caps = enabled_caps;
 
-  return new_tlv;
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_sys_capabilities_serialize,
+                                          NULL,
+                                          zl_tlv_sys_capabilities_free);
+  if ( likely(object != NULL) )
+    return object;
+
+  zl_free (new_tlv);
+
+error:
+  return NULL;
 }
 
-void
-zl_tlv_sys_capabilities_free (zl_tlv_sys_cap_t *tlv)
+
+/* -- Management Address -- */
+static int
+zl_tlv_mgmt_addr_serialize (char *dst_buf, void *src_tlv)
 {
+  int size;
+  zl_tlv_cmn_t *common;
+  zl_tlv_mgmt_addr_t *obj;
+  /* Cal variables */
+  uint8_t buf[256] = { 0, };
+  size_t len = 0,
+         cal_size = 0;
+
+  zl_ret_val_if_fail (dst_buf != NULL, -1);
+  zl_ret_val_if_fail (src_tlv != NULL, -1);
+
+  common = (zl_tlv_cmn_t *)src_tlv;
+  obj = (zl_tlv_mgmt_addr_t *)src_tlv;
+  size = sizeof(*common) + common->length;
+
+  /* TLV header */
+  len = sizeof(*common);
+  /* Management Address String Length */
+  len += sizeof(obj->addr_len);
+  /* Management Address String */
+  len += obj->addr_len;
+  zl_memcpy (buf, obj, len);
+
+  /* Interface Numbering Subtype */
+  cal_size = sizeof(obj->iface_subtype);
+  *(uint8_t *)(buf+len) = obj->iface_subtype;
+  len += cal_size;
+  /* Interface Number */
+  cal_size = sizeof(obj->iface_number);
+  *(uint32_t *)(buf+len) = htonl (obj->iface_number);
+  len += cal_size;
+
+  /* OID String Length */
+  cal_size = sizeof(obj->oid_len);
+  *(uint8_t *)(buf+len) = obj->oid_len;
+  len += cal_size;
+  /* Object Identifier */
+  zl_memcpy (buf+len, obj->oid_value, obj->oid_len);
+  len += obj->oid_len;
+
+  zl_assert (size == len);
+
+  zl_memcpy (dst_buf, buf, len);
+
+  return len;
+}
+
+static void
+zl_tlv_mgmt_addr_free (void *tlv)
+{
+  zl_tlv_mgmt_addr_t *obj;
+
   zl_ret_if_fail (tlv != NULL);
 
-  zl_free (tlv);
+  obj = (zl_tlv_mgmt_addr_t *)tlv;
+
+  zl_free (obj);
 }
 
-zl_tlv_mgmt_addr_t *
+zl_object_t *
 zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
                       uint8_t mgmt_addr_subtype,
                       uint8_t *mgmt_addr_val,
@@ -268,16 +635,18 @@ zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
                       uint8_t oid_str_len,
                       uint8_t *oid_str_val)
 {
-  zl_tlv_cmn_t *common;
-  zl_tlv_mgmt_addr_t *new_tlv;
+  zl_object_t *object = NULL;
+  zl_tlv_cmn_t *common = NULL;
+  zl_tlv_mgmt_addr_t *new_tlv = NULL;
 
   zl_ret_val_if_fail (mgmt_addr_val != NULL, NULL);
   zl_ret_val_if_fail (oid_str_val != NULL, NULL);
-  zl_ret_val_if_fail (1 < mgmt_addr_len && mgmt_addr_len < 33, NULL);
-  zl_ret_val_if_fail (oid_str_len < 129, NULL);
+  zl_ret_val_if_fail (1 <= mgmt_addr_len && mgmt_addr_len <= 32, NULL);
+  zl_ret_val_if_fail (oid_str_len <= 128, NULL);
 
   new_tlv = zl_calloc (1, sizeof(*new_tlv));
-  zl_ret_val_if (new_tlv == NULL, NULL);
+  if ( unlikely(!new_tlv) )
+    goto error;
 
   common = (zl_tlv_cmn_t *)new_tlv;
   common->type = TLV_MANAGEMENT_ADDRESS;
@@ -285,25 +654,22 @@ zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
 
   new_tlv->addr_len = mgmt_addr_len;
   new_tlv->addr_subtype = mgmt_addr_subtype;
-  new_tlv->addr_value = zl_memdup (mgmt_addr_val, mgmt_addr_len - 1 /* Size of subtype */);
+  zl_memcpy (new_tlv->addr_value, mgmt_addr_val, mgmt_addr_len - 1 /* Size of subtype */);
+
   new_tlv->iface_subtype = iface_subtype;
   new_tlv->iface_number = iface_number;
   new_tlv->oid_len = oid_str_len;
-  new_tlv->oid_value = zl_memdup (oid_str_val, oid_str_len);
+  zl_memcpy (new_tlv->oid_value, oid_str_val, oid_str_len);
 
-  return new_tlv;
-}
+  object = zl_object_new_with_tlv_params (common,
+                                          zl_tlv_mgmt_addr_serialize,
+                                          NULL,
+                                          zl_tlv_mgmt_addr_free);
+  if ( likely(object != NULL) )
+    return object;
 
-void
-zl_tlv_mgmt_addr_free (zl_tlv_mgmt_addr_t *tlv)
-{
-  zl_ret_if_fail (tlv != NULL);
+  zl_free (new_tlv);
 
-  if (tlv->addr_value)
-    zl_free (tlv->addr_value);
-
-  if (tlv->oid_value)
-    zl_free (tlv->oid_value);
-
-  zl_free (tlv);
+error:
+  return NULL;
 }

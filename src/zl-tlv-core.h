@@ -44,7 +44,7 @@ struct _zl_tlv_chassis_id_t
    * 8-255: Reserved
    */
   uint8_t       subtype;
-  uint8_t       *value;
+  uint8_t       value[256];
 } zl_1byte_pack;
 
 /* -- Port ID (Mandatory) -- */
@@ -64,7 +64,7 @@ struct _zl_tlv_port_id_t
    * 8-255: Reserved
    */
   uint8_t       subtype;
-  uint8_t       *value;
+  uint8_t       value[256];
 } zl_1byte_pack;
 
 /* -- Time To Live (Mandatory) -- */
@@ -82,7 +82,7 @@ struct _zl_tlv_port_desc_t
 {
   zl_tlv_cmn_t  parent;
 
-  uint8_t       *value;
+  uint8_t       value[256];
 } zl_1byte_pack;
 
 /* -- System Name (Optional) -- */
@@ -91,7 +91,7 @@ struct _zl_tlv_sys_name_t
 {
   zl_tlv_cmn_t  parent;
 
-  uint8_t       *value;
+  uint8_t       value[256];
 } zl_1byte_pack;
 
 /* -- System Description (Optional) -- */
@@ -100,7 +100,7 @@ struct _zl_tlv_sys_desc_t
 {
   zl_tlv_cmn_t  parent;
 
-  uint8_t       *value;
+  uint8_t       value[256];
 } zl_1byte_pack;
 
 /* -- System Capabilities (Optional) -- */
@@ -132,13 +132,13 @@ struct _zl_tlv_mgmt_addr_t
   uint8_t       addr_len;
   /* Management Address String */
   uint8_t       addr_subtype;
-  uint8_t       *addr_value;
+  uint8_t       addr_value[31];
 
   uint8_t       iface_subtype;
   uint32_t      iface_number;
 
   uint8_t       oid_len;
-  uint8_t       *oid_value;
+  uint8_t       oid_value[128];
 } zl_1byte_pack;
 
 #endif
