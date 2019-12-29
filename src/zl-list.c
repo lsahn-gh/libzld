@@ -121,5 +121,7 @@ zl_list_is_empty (zl_list_t *object)
 
   zl_ret_val_if_fail (object != NULL, 0);
 
+  self = object;
+
   return self->length == 0;
 }
