@@ -48,10 +48,11 @@ enum
 typedef struct _zl_tlv_cmn_t zl_tlv_cmn_t;
 struct _zl_tlv_cmn_t
 {
-  zl_obj_t   priv;
   uint8_t    type : 7;
   uint16_t   length : 9;
 } zl_1byte_pack;
+
+#define GET_TLV_COMMON_INSTANCE(tlv) (zl_tlv_cmn_t *)tlv
 
 /* -- Organizationally Specific TLV Type -- */
 typedef struct _zl_tlv_org_t zl_tlv_org_t;
