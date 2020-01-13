@@ -23,11 +23,10 @@ struct _zl_object_t
   void          *next;
   zl_tlv_cmn_t  *tlv;
 
-  int  (*fn_serialize)    (char *dst_buf, const void *src_tlv);
-  void (*fn_deserialize)  (void *dst_tlv, const char *src_buf);
-  void (*fn_free)         (zl_tlv_cmn_t *tlv);
+  fn_serialize_t serialize;
+  fn_deserialize_t deserialize;
+  fn_free_t free;
 };
-
 
 zl_object_t *
 zl_object_new (void)
@@ -42,10 +41,13 @@ zl_object_new (void)
 }
 
 zl_object_t *
-zl_object_new_with_2_params (void *tlv,
-                             void *fn_free)
+zl_object_new_with_tlv_params (void *tlv,
+                               void *fn_serialize,
+                               void *fn_deserialize,
+                               void *fn_free)
 {
   zl_object_t *new_obj;
+  zl_picky_t picky;
 
   zl_ret_val_if_fail (tlv != NULL, NULL);
   zl_ret_val_if_fail (fn_free != NULL, NULL);
@@ -55,30 +57,15 @@ zl_object_new_with_2_params (void *tlv,
     return NULL;
 
   new_obj->tlv = tlv;
-  new_obj->fn_free = fn_free;
 
-  return new_obj;
-}
+  picky.pointer = fn_serialize;
+  new_obj->serialize = picky.serialize;
 
-zl_object_t *
-zl_object_new_with_4_params (void *tlv,
-                             void *fn_serialize,
-                             void *fn_deserialize,
-                             void *fn_free)
-{
-  zl_object_t *new_obj;
+  picky.pointer = fn_deserialize;
+  new_obj->deserialize = picky.deserialize;
 
-  zl_ret_val_if_fail (tlv != NULL, NULL);
-  zl_ret_val_if_fail (fn_free != NULL, NULL);
-
-  new_obj = zl_object_new ();
-  if ( unlikely(!new_obj) )
-    return NULL;
-
-  new_obj->tlv = tlv;
-  new_obj->fn_serialize = fn_serialize;
-  new_obj->fn_deserialize = fn_deserialize;
-  new_obj->fn_free = fn_free;
+  picky.pointer = fn_free;
+  new_obj->free = picky.free;
 
   return new_obj;
 }
@@ -86,28 +73,37 @@ zl_object_new_with_4_params (void *tlv,
 void
 zl_object_set_fn_serialize (zl_object_t *object, void *new_fn)
 {
+  zl_picky_t picky;
+
   zl_ret_if_fail (object != NULL);
   zl_ret_if_fail (new_fn != NULL);
 
-  object->fn_serialize = new_fn;
+  picky.pointer = new_fn;
+  object->serialize = picky.serialize;
 }
 
 void
 zl_object_set_fn_deserialize (zl_object_t *object, void *new_fn)
 {
+  zl_picky_t picky;
+
   zl_ret_if_fail (object != NULL);
   zl_ret_if_fail (new_fn != NULL);
 
-  object->fn_deserialize = new_fn;
+  picky.pointer = new_fn;
+  object->deserialize = picky.deserialize;
 }
 
 void
 zl_object_set_fn_free (zl_object_t *object, void *new_fn)
 {
+  zl_picky_t picky;
+
   zl_ret_if_fail (object != NULL);
   zl_ret_if_fail (new_fn != NULL);
 
-  object->fn_free = new_fn;
+  picky.pointer = new_fn;
+  object->free = picky.free;
 }
 
 int
@@ -118,8 +114,8 @@ zl_object_serialize_tlv (zl_object_t *object, char *out_buf)
   zl_ret_val_if_fail (object != NULL, -1);
   zl_ret_val_if_fail (out_buf != NULL, -1);
 
-  if (object->fn_serialize)
-    ret = object->fn_serialize (out_buf, object->tlv);
+  if (object->serialize)
+    ret = object->serialize (out_buf, object->tlv);
 
   return ret;
 }
@@ -129,6 +125,6 @@ zl_object_free (zl_object_t *object)
 {
   zl_ret_if_fail (object != NULL);
 
-  object->fn_free (object->tlv);
+  object->free (object->tlv);
   zl_free (object);
 }

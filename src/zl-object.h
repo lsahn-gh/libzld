@@ -22,6 +22,29 @@
 #include <zl-list.h>
 #include <zl-tlv-common.h>
 
+typedef int (*fn_serialize_t) (char *, const void *);
+typedef void (*fn_deserialize_t) (void *, const char *);
+typedef void (*fn_free_t) (void *);
+
+typedef struct
+{
+  union {
+    void *pointer;
+
+    fn_serialize_t serialize;
+    fn_deserialize_t deserialize;
+    fn_free_t free;
+  };
+} zl_picky_t;
+
+enum
+{
+  SERIALIZE_FN = 0,
+  DESERIALIZE_FN,
+  FREE_FN,
+  N_FUNCTIONS,
+};
+
 /* -- Object Type -- */
 typedef struct _zl_object_t zl_object_t;
 
