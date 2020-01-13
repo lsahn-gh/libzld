@@ -35,8 +35,8 @@
 
 
 /* -- Platform Dependency Macros -- */
-#define zl_nbyte_pack(n) __attribute((aligned(n), packed))
-#define zl_1byte_pack zl_nbyte_pack(1)
+#define zl_nbyte_pack(n)  __attribute__((aligned(n), packed))
+#define zl_1byte_pack     zl_nbyte_pack(1)
 
 #define likely(x)    __builtin_expect((x),1)
 #define unlikely(x)  __builtin_expect((x),0)
