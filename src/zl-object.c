@@ -125,6 +125,7 @@ zl_object_free (zl_object_t *object)
 {
   zl_ret_if_fail (object != NULL);
 
-  object->free (object->tlv);
+  if (object->free)
+    object->free (object->tlv);
   zl_free (object);
 }
