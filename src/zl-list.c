@@ -35,54 +35,50 @@ zl_list_new (void)
 zl_list_t *
 zl_list_insert_head (zl_list_t *object, void *tlv)
 {
-  zl_list_t *self;
   zl_elem_t *elem;
 
   zl_ret_val_if_fail (object != NULL, NULL);
   zl_ret_val_if_fail (tlv != NULL, NULL);
 
-  self = object;
   elem = (zl_elem_t *)tlv;
 
-  if (self->length == 0) {
+  if (object->length == 0) {
     elem->next = elem;
-    self->head = elem;
-    self->tail = elem;
+    object->head = elem;
+    object->tail = elem;
   } else {
-    elem->next = self->head;
-    self->head = elem;
+    elem->next = object->head;
+    object->head = elem;
   }
 
-  self->length += 1;
+  object->length += 1;
 
-  return self;
+  return object;
 }
 
 zl_list_t *
 zl_list_insert_tail (zl_list_t *object, void *tlv)
 {
-  zl_list_t *self;
   zl_elem_t *elem;
 
   zl_ret_val_if_fail (object != NULL, NULL);
   zl_ret_val_if_fail (tlv != NULL, NULL);
 
-  self = object;
   elem = (zl_elem_t *)tlv;
 
-  if (self->length == 0) {
+  if (object->length == 0) {
     elem->next = elem;
-    self->head = elem;
-    self->tail = elem;
+    object->head = elem;
+    object->tail = elem;
   } else {
     elem->next = NULL;
-    self->tail->next = elem;
-    self->tail = elem;
+    object->tail->next = elem;
+    object->tail = elem;
   }
 
-  self->length += 1;
+  object->length += 1;
 
-  return self;
+  return object;
 }
 
 zl_list_t *
@@ -97,18 +93,15 @@ zl_list_enqueue (zl_list_t *object, void *tlv)
 zl_elem_t *
 zl_list_dequeue (zl_list_t *object)
 {
-  zl_list_t *self;
   zl_elem_t *elem = NULL;
 
   zl_ret_val_if_fail (object != NULL, NULL);
 
-  self = object;
+  if (object->length) {
+    elem = object->head;
+    object->head = object->head->next;
 
-  if (self->length) {
-    elem = self->head;
-    self->head = self->head->next;
-
-    self->length -= 1;
+    object->length -= 1;
   }
 
   return elem;
@@ -117,11 +110,11 @@ zl_list_dequeue (zl_list_t *object)
 int
 zl_list_is_empty (zl_list_t *object)
 {
-  zl_list_t *self;
+  int ret;
 
   zl_ret_val_if_fail (object != NULL, 0);
 
-  self = object;
+  ret = object->length == 0;
 
-  return self->length == 0;
+  return ret;
 }
