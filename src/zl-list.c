@@ -118,3 +118,15 @@ zl_list_is_empty (zl_list_t *object)
 
   return ret;
 }
+
+size_t
+zl_list_length (zl_list_t *object)
+{
+  size_t ret;
+
+  zl_ret_val_if_fail (object != NULL, 0);
+
+  ret = object->length;
+
+  return ret;
+}

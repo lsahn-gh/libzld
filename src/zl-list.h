@@ -44,5 +44,6 @@ zl_list_t * zl_list_insert_tail (zl_list_t *object, void *tlv);
 zl_list_t * zl_list_enqueue     (zl_list_t *object, void *tlv);
 zl_elem_t * zl_list_dequeue     (zl_list_t *object);
 int         zl_list_is_empty    (zl_list_t *object);
+size_t      zl_list_length      (zl_list_t *object);
 
 #endif
