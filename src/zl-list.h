@@ -25,13 +25,6 @@
 typedef struct _zl_list_t zl_list_t;
 typedef struct _zl_elem_t zl_elem_t;
 
-struct _zl_list_t
-{
-  size_t    length;
-  zl_elem_t *head;
-  zl_elem_t *tail;
-};
-
 struct _zl_elem_t
 {
   zl_elem_t *next;

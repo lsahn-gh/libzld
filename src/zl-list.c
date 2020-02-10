@@ -15,19 +15,44 @@
  * limitations under the License.
  */
 
+#include <pthread.h>
+
 #include <priv/zl-macro.h>
 #include <priv/zl-mem.h>
 
 #include <zl-list.h>
 
+struct _zl_list_t
+{
+  pthread_mutex_t key;
+  size_t    length;
+  zl_elem_t *head;
+  zl_elem_t *tail;
+};
+
+/* -- Private APIs -- */
+static inline void lock(zl_list_t *object)
+{
+  pthread_mutex_lock(&(object->key));
+}
+
+static inline void unlock(zl_list_t *object)
+{
+  pthread_mutex_unlock(&(object->key));
+}
+
 /* -- Public APIs -- */
 zl_list_t *
 zl_list_new (void)
 {
-  void * new_list;
+  zl_list_t * new_list;
 
   new_list = zl_calloc (1, sizeof(zl_list_t));
   zl_ret_val_if (new_list == NULL, NULL);
+
+  /* TODO
+   * Care for error? I don't know... */
+  pthread_mutex_init(&(new_list->key), NULL);
 
   return new_list;
 }
@@ -42,6 +67,7 @@ zl_list_insert_head (zl_list_t *object, void *tlv)
 
   elem = (zl_elem_t *)tlv;
 
+  lock(object);
   if (object->length == 0) {
     elem->next = elem;
     object->head = elem;
@@ -52,6 +78,7 @@ zl_list_insert_head (zl_list_t *object, void *tlv)
   }
 
   object->length += 1;
+  unlock(object);
 
   return object;
 }
@@ -66,6 +93,7 @@ zl_list_insert_tail (zl_list_t *object, void *tlv)
 
   elem = (zl_elem_t *)tlv;
 
+  lock(object);
   if (object->length == 0) {
     elem->next = elem;
     object->head = elem;
@@ -77,6 +105,7 @@ zl_list_insert_tail (zl_list_t *object, void *tlv)
   }
 
   object->length += 1;
+  unlock(object);
 
   return object;
 }
@@ -97,12 +126,14 @@ zl_list_dequeue (zl_list_t *object)
 
   zl_ret_val_if_fail (object != NULL, NULL);
 
+  lock(object);
   if (object->length) {
     elem = object->head;
     object->head = object->head->next;
 
     object->length -= 1;
   }
+  unlock(object);
 
   return elem;
 }
@@ -114,7 +145,9 @@ zl_list_is_empty (zl_list_t *object)
 
   zl_ret_val_if_fail (object != NULL, 0);
 
+  lock(object);
   ret = object->length == 0;
+  unlock(object);
 
   return ret;
 }
@@ -126,7 +159,9 @@ zl_list_length (zl_list_t *object)
 
   zl_ret_val_if_fail (object != NULL, 0);
 
+  lock(object);
   ret = object->length;
+  unlock(object);
 
   return ret;
 }
