@@ -69,7 +69,6 @@ zl_list_insert_head (zl_list_t *object, void *tlv)
 
   lock(object);
   if (object->length == 0) {
-    elem->next = elem;
     object->head = elem;
     object->tail = elem;
   } else {
@@ -95,13 +94,10 @@ zl_list_insert_tail (zl_list_t *object, void *tlv)
 
   lock(object);
   if (object->length == 0) {
-    elem->next = elem;
     object->head = elem;
     object->tail = elem;
   } else {
-    elem->next = NULL;
     object->tail->next = elem;
-    object->tail = elem;
   }
 
   object->length += 1;
