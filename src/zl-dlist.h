@@ -1,0 +1,100 @@
+/* zl-dlist.h
+ *
+ * Copyright 2019-2020 Leesoo Ahn <yisooan@fedoraproject.org>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* This is based on list.h of Linux Kernel */
+
+#ifndef __ZL_DLIST_H__
+#define __ZL_DLIST_H__
+
+#include <stdlib.h>
+#include <stdint.h>
+
+typedef struct _zl_dlist_t zl_dlist_t;
+struct _zl_dlist_t {
+  struct _zl_dlist_t *prev, *next;
+};
+
+#define ZL_GET_DLIST(ptr)  ((zl_dlist_t *)ptr)
+
+#define DLIST_HEAD_INIT(name) { &(name), &(name) }
+#define DLIST_HEAD(name) zl_dlist_t name = DLIST_HEAD_INIT(name)
+
+static inline void zl_dlist_init_head(zl_dlist_t *__head)
+{
+  if (__head == NULL)
+    return;
+
+  __head->next = __head;
+  __head->prev = __head;
+}
+
+static inline int __zl_list_add(zl_dlist_t *__new,
+                                zl_dlist_t *prev,
+                                zl_dlist_t *next)
+{
+  if (__new == NULL)
+    return -1;
+
+  __new->next = next;
+  __new->prev = prev;
+  prev->next = __new;
+  next->prev = __new;
+
+  return 0;
+}
+
+static inline int zl_dlist_append(zl_dlist_t *__head, zl_dlist_t *entry)
+{
+  if (__head == NULL || entry == NULL)
+    return -1;
+
+  return __zl_list_add(entry, __head->prev, __head);
+}
+
+static inline int __zl_list_del(zl_dlist_t *entry)
+{
+  if (entry == NULL)
+    return -1;
+
+  entry->prev->next = entry->next;
+  entry->next->prev = entry->prev;
+
+  return 0;
+}
+
+static inline int zl_dlist_remove(zl_dlist_t *entry)
+{
+  if (entry == NULL)
+    return -1;
+
+  return __zl_list_del(entry);
+}
+
+static inline int zl_dlist_empty(zl_dlist_t *head)
+{
+  if (head == NULL)
+    return 1;
+
+  return head->next == head;
+}
+
+#define zl_dlist_foreach(__head) \
+  for (zl_dlist_t *__ptr = (__head)->next; __ptr != (__head); __ptr = __ptr->next)
+
+#define zl_dlist_foreach_safe(__head) \
+  for (zl_dlist_t *__ptr, *__n = (__ptr = (__head)->next, __ptr->next); __ptr != (__head); __ptr = __n, __n = __ptr->next)
+
+#endif
