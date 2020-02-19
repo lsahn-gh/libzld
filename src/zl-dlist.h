@@ -29,10 +29,10 @@ struct _zl_dlist_t {
 
 #define ZL_GET_DLIST(ptr)  ((zl_dlist_t *)ptr)
 
-#define DLIST_HEAD_INIT(name) { &(name), &(name) }
-#define DLIST_HEAD(name) zl_dlist_t name = DLIST_HEAD_INIT(name)
+#define ZL_DLIST_HEAD_INIT(name) { &(name), &(name) }
+#define ZL_DLIST_HEAD(name) zl_dlist_t name = ZL_DLIST_HEAD_INIT(name)
 
-static inline void zl_dlist_init_head(zl_dlist_t *__head)
+static inline void zl_dlist_init_head (zl_dlist_t *__head)
 {
   if (__head == NULL)
     return;
@@ -41,9 +41,17 @@ static inline void zl_dlist_init_head(zl_dlist_t *__head)
   __head->prev = __head;
 }
 
-static inline int __zl_list_add(zl_dlist_t *__new,
-                                zl_dlist_t *prev,
-                                zl_dlist_t *next)
+static inline int zl_dlist_empty (zl_dlist_t *head)
+{
+  if (head == NULL)
+    return 1;
+
+  return head->next == head;
+}
+
+static inline int __zl_list_add (zl_dlist_t *__new,
+                                 zl_dlist_t *prev,
+                                 zl_dlist_t *next)
 {
   if (__new == NULL)
     return -1;
@@ -56,7 +64,7 @@ static inline int __zl_list_add(zl_dlist_t *__new,
   return 0;
 }
 
-static inline int zl_dlist_append(zl_dlist_t *__head, zl_dlist_t *entry)
+static inline int zl_dlist_add_head (zl_dlist_t *__head, zl_dlist_t *entry)
 {
   if (__head == NULL || entry == NULL)
     return -1;
@@ -64,7 +72,15 @@ static inline int zl_dlist_append(zl_dlist_t *__head, zl_dlist_t *entry)
   return __zl_list_add(entry, __head->prev, __head);
 }
 
-static inline int __zl_list_del(zl_dlist_t *entry)
+static inline int zl_dlist_add_tail (zl_dlist_t *__head, zl_dlist_t *entry)
+{
+  if (__head == NULL || entry == NULL)
+    return -1;
+
+  return __zl_list_add(entry, __head, __head->next);
+}
+
+static inline int __zl_list_del (zl_dlist_t *entry)
 {
   if (entry == NULL)
     return -1;
@@ -75,7 +91,7 @@ static inline int __zl_list_del(zl_dlist_t *entry)
   return 0;
 }
 
-static inline int zl_dlist_remove(zl_dlist_t *entry)
+static inline int zl_dlist_remove (zl_dlist_t *entry)
 {
   if (entry == NULL)
     return -1;
@@ -83,12 +99,34 @@ static inline int zl_dlist_remove(zl_dlist_t *entry)
   return __zl_list_del(entry);
 }
 
-static inline int zl_dlist_empty(zl_dlist_t *head)
+static inline void * zl_dlist_remove_head (zl_dlist_t *head)
 {
-  if (head == NULL)
-    return 1;
+  void * ret = NULL;
 
-  return head->next == head;
+  if (head == NULL)
+    return ret;
+  if (zl_dlist_empty (head))
+    return ret;
+
+  ret = head->next;
+  __zl_list_del (head->next);
+
+  return ret;
+}
+
+static inline void * zl_dlist_remove_tail (zl_dlist_t *head)
+{
+  void * ret = NULL;
+
+  if (head == NULL)
+    return ret;
+  if (zl_dlist_empty (head))
+    return ret;
+
+  ret = head->prev;
+  __zl_list_del (head->prev);
+
+  return ret;
 }
 
 #define zl_dlist_foreach(__head) \
