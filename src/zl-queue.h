@@ -57,6 +57,6 @@ static inline void * zl_queue_peek (zl_queue_t *head)
   return head->next;
 }
 
-#define zl_queue_foreach_safe(__head) zl_dlist_foreach_safe(ZL_GET_DLIST(__head));
+#define zl_queue_foreach_safe(__head) zl_dlist_foreach_safe(ZL_GET_DLIST(__head))
 
 #endif
