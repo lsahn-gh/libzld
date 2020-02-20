@@ -19,7 +19,6 @@
 #define __ZL_OBJECT_H__
 
 #include <priv/zl-macro.h>
-#include <zl-list.h>
 #include <zl-tlv-common.h>
 
 typedef int (*fn_serialize_t) (char *, const void *);

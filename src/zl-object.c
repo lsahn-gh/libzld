@@ -17,12 +17,13 @@
 
 #include <priv/zl-mem.h>
 #include <zl-object.h>
+#include <zl-dlist.h>
 
 struct _zl_object_t
 {
-  void          *next;
-  zl_tlv_cmn_t  *tlv;
+  zl_dlist_t    _;
 
+  zl_tlv_cmn_t  *tlv;
   fn_serialize_t serialize;
   fn_deserialize_t deserialize;
   fn_free_t free;
