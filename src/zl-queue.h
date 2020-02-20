@@ -37,12 +37,12 @@ static inline int zl_queue_empty (zl_queue_t *head)
   return zl_dlist_empty (ZL_GET_DLIST (head));
 }
 
-static inline int zl_queue_enqueue (zl_queue_t *head, zl_queue_t *entry)
+static inline int zl_queue_push (zl_queue_t *head, zl_queue_t *entry)
 {
   return zl_dlist_add_tail (ZL_GET_DLIST (head), ZL_GET_DLIST (entry));
 }
 
-static inline void * zl_queue_dequeue (zl_queue_t *head)
+static inline void * zl_queue_pop (zl_queue_t *head)
 {
   return zl_dlist_remove_head (ZL_GET_DLIST (head));
 }
