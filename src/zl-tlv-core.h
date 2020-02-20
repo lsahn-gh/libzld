@@ -141,4 +141,28 @@ struct _zl_tlv_mgmt_addr_t
   uint8_t       oid_value[128];
 } zl_1byte_pack;
 
+zl_object_t * zl_tlv_end_lldpdu_new       (void);
+zl_object_t * zl_tlv_chassis_id_new       (uint8_t subtype,
+                                           const uint8_t *src,
+                                           const size_t nbytes);
+zl_object_t * zl_tlv_port_id_new          (uint8_t subtype,
+                                           const uint8_t *src,
+                                           const size_t nbytes);
+zl_object_t * zl_tlv_ttl_new              (uint16_t src);
+zl_object_t * zl_tlv_port_desc_new        (const uint8_t *src,
+                                           const size_t nbytes);
+zl_object_t * zl_tlv_sys_name_new         (const uint8_t *src,
+                                           const size_t nbytes);
+zl_object_t * zl_tlv_sys_desc_new         (const uint8_t *src,
+                                           const size_t nbytes);
+zl_object_t * zl_tlv_sys_capabilities_new (uint16_t sys_caps,
+                                           uint16_t enabled_caps);
+zl_object_t * zl_tlv_mgmt_addr_new        (uint8_t mgmt_addr_len,
+                                           uint8_t mgmt_addr_subtype,
+                                           uint8_t *mgmt_addr_val,
+                                           uint8_t iface_subtype,
+                                           uint32_t iface_number,
+                                           uint8_t oid_str_len,
+                                           uint8_t *oid_str_val);
+
 #endif

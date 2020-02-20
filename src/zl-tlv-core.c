@@ -24,7 +24,8 @@
 
 /* -- End Of LLDPDU -- */
 static int
-zl_tlv_end_lldpdu_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_end_lldpdu_serialize (char *dst_buf,
+                             const void *src_tlv)
 {
   int size;
   const zl_tlv_end_lldpdu_t *obj;
@@ -89,7 +90,8 @@ error:
 
 /* -- Chassis ID -- */
 static int
-zl_tlv_chassis_id_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_chassis_id_serialize (char *dst_buf,
+                             const void *src_tlv)
 {
   int size;
   const zl_tlv_cmn_t *common;
@@ -121,7 +123,9 @@ zl_tlv_chassis_id_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_chassis_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
+zl_tlv_chassis_id_new (uint8_t subtype,
+                       const uint8_t *src,
+                       const size_t nbytes)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -162,7 +166,8 @@ error:
 
 /* -- Port ID -- */
 static int
-zl_tlv_port_id_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_port_id_serialize (char *dst_buf,
+                          const void *src_tlv)
 {
   int size;
   const zl_tlv_cmn_t *common;
@@ -194,7 +199,9 @@ zl_tlv_port_id_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_port_id_new (uint8_t subtype, uint8_t *src, size_t nbytes)
+zl_tlv_port_id_new (uint8_t subtype,
+                    const uint8_t *src,
+                    const size_t nbytes)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -235,7 +242,8 @@ error:
 
 /* -- Time To Live -- */
 static int
-zl_tlv_ttl_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_ttl_serialize (char *dst_buf,
+                      const void *src_tlv)
 {
   int size;
   uint16_t ttl_val;
@@ -271,7 +279,7 @@ zl_tlv_ttl_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_ttl_new (uint16_t src)
+zl_tlv_ttl_new (const uint16_t src)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -308,7 +316,8 @@ error:
 
 /* -- Port Description -- */
 static int
-zl_tlv_port_desc_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_port_desc_serialize (char *dst_buf,
+                            const void *src_tlv)
 {
   int size;
   const zl_tlv_cmn_t *common;
@@ -340,7 +349,8 @@ zl_tlv_port_desc_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_port_desc_new (uint8_t *src, size_t nbytes)
+zl_tlv_port_desc_new (const uint8_t *src,
+                      const size_t nbytes)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -380,7 +390,8 @@ error:
 
 /* -- System Name -- */
 static int
-zl_tlv_sys_name_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_sys_name_serialize (char *dst_buf,
+                           const void *src_tlv)
 {
   int size;
   const zl_tlv_cmn_t *common;
@@ -412,7 +423,8 @@ zl_tlv_sys_name_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_sys_name_new (uint8_t *src, size_t nbytes)
+zl_tlv_sys_name_new (const uint8_t *src,
+                     const size_t nbytes)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -452,7 +464,8 @@ error:
 
 /* -- System Description -- */
 static int
-zl_tlv_sys_desc_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_sys_desc_serialize (char *dst_buf,
+                           const void *src_tlv)
 {
   int size;
   const zl_tlv_cmn_t *common;
@@ -484,7 +497,8 @@ zl_tlv_sys_desc_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_sys_desc_new (uint8_t *src, size_t nbytes)
+zl_tlv_sys_desc_new (const uint8_t *src,
+                     const size_t nbytes)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -524,7 +538,8 @@ error:
 
 /* -- System Capabilities -- */
 static int
-zl_tlv_sys_capabilities_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_sys_capabilities_serialize (char *dst_buf,
+                                   const void *src_tlv)
 {
   int size;
   uint16_t sys_val,
@@ -567,7 +582,8 @@ zl_tlv_sys_capabilities_free (void *tlv)
 }
 
 zl_object_t *
-zl_tlv_sys_capabilities_new (uint16_t sys_caps, uint16_t enabled_caps)
+zl_tlv_sys_capabilities_new (uint16_t sys_caps,
+                             uint16_t enabled_caps)
 {
   zl_object_t *object = NULL;
   zl_tlv_cmn_t *common = NULL;
@@ -605,7 +621,8 @@ error:
 
 /* -- Management Address -- */
 static int
-zl_tlv_mgmt_addr_serialize (char *dst_buf, const void *src_tlv)
+zl_tlv_mgmt_addr_serialize (char *dst_buf,
+                            const void *src_tlv)
 {
   int size;
   zl_tlv_cmn_t *common;
