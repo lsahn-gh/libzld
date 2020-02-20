@@ -21,7 +21,6 @@
 #include <stdint.h>
 
 #include <priv/zl-macro.h>
-#include <zl-list.h>
 #include <zl-tlv-common.h>
 
 /* -- End Of LLDPDU (Mandatory) -- */
