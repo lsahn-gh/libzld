@@ -698,7 +698,6 @@ zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
   zl_picky_t picky[N_FUNCTIONS];
 
   zl_ret_val_if_fail (mgmt_addr_val != NULL, NULL);
-  zl_ret_val_if_fail (oid_str_val != NULL, NULL);
   zl_ret_val_if_fail (1 <= mgmt_addr_len && mgmt_addr_len <= 32, NULL);
   zl_ret_val_if_fail (oid_str_len <= 128, NULL);
 
