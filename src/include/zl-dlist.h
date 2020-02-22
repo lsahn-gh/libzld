@@ -69,7 +69,7 @@ static inline int zl_dlist_add_head (zl_dlist_t *__head, zl_dlist_t *entry)
   if (__head == NULL || entry == NULL)
     return -1;
 
-  return __zl_list_add(entry, __head->prev, __head);
+  return __zl_list_add(entry, __head, __head->next);
 }
 
 static inline int zl_dlist_add_tail (zl_dlist_t *__head, zl_dlist_t *entry)
@@ -77,7 +77,7 @@ static inline int zl_dlist_add_tail (zl_dlist_t *__head, zl_dlist_t *entry)
   if (__head == NULL || entry == NULL)
     return -1;
 
-  return __zl_list_add(entry, __head, __head->next);
+  return __zl_list_add(entry, __head->prev, __head);
 }
 
 static inline int __zl_list_del (zl_dlist_t *entry)
@@ -129,10 +129,10 @@ static inline void * zl_dlist_remove_tail (zl_dlist_t *head)
   return ret;
 }
 
-#define zl_dlist_foreach(__head) \
-  for (zl_dlist_t *__ptr = (__head)->next; __ptr != (__head); __ptr = __ptr->next)
+#define zl_dlist_foreach(pos, head) \
+  for (pos = (head)->next; pos != (head); pos = pos->next)
 
-#define zl_dlist_foreach_safe(__head) \
-  for (zl_dlist_t *__ptr, *__n = (__ptr = (__head)->next, __ptr->next); __ptr != (__head); __ptr = __n, __n = __ptr->next)
+#define zl_dlist_foreach_safe(pos, n, head) \
+  for (pos = (head)->next, n = pos->next; pos != (head); pos = n, n = pos->next)
 
 #endif
