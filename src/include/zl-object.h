@@ -47,7 +47,7 @@ enum
 /* -- Object Type -- */
 typedef struct _zl_object_t zl_object_t;
 
-#define GET_ZL_OBJECT(ptr) ((zl_object_t *)ptr)
+#define ZL_GET_OBJECT(ptr) ((zl_object_t *)ptr)
 
 zl_object_t * zl_object_new                 (void);
 zl_object_t * zl_object_new_with_tlv_params (void *tlv,
