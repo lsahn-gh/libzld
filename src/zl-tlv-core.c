@@ -28,14 +28,21 @@ zl_tlv_end_lldpdu_serialize (char *dst_buf,
                              const void *src_tlv)
 {
   int size;
-  const zl_tlv_end_lldpdu_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_end_lldpdu_t *obj,
+                      ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  obj = (zl_tlv_end_lldpdu_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_end_lldpdu_t *)&ibuf;
 
   size = sizeof(*obj);
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -94,16 +101,21 @@ zl_tlv_chassis_id_serialize (char *dst_buf,
                              const void *src_tlv)
 {
   int size;
-  const zl_tlv_cmn_t *common;
-  const zl_tlv_chassis_id_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_chassis_id_t *obj,
+                      ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_chassis_id_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_chassis_id_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -170,16 +182,21 @@ zl_tlv_port_id_serialize (char *dst_buf,
                           const void *src_tlv)
 {
   int size;
-  const zl_tlv_cmn_t *common;
-  const zl_tlv_port_id_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_port_id_t *obj,
+                   ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_port_id_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_port_id_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -248,20 +265,25 @@ zl_tlv_ttl_serialize (char *dst_buf,
   int size;
   uint16_t ttl_val;
   zl_tlv_cmn_t *common;
-  zl_tlv_ttl_t *obj;
+  zl_tlv_ttl_t *obj,
+               ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_ttl_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_ttl_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
 
+  zl_tlv_common_serialize (common);
+
   ttl_val = obj->value;
   obj->value = htons (ttl_val);
+
   zl_memcpy (dst_buf, obj, size);
-  obj->value = ttl_val;
 
   return size;
 }
@@ -320,16 +342,21 @@ zl_tlv_port_desc_serialize (char *dst_buf,
                             const void *src_tlv)
 {
   int size;
-  const zl_tlv_cmn_t *common;
-  const zl_tlv_port_desc_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_port_desc_t *obj,
+                     ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_port_desc_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_port_desc_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -394,16 +421,21 @@ zl_tlv_sys_name_serialize (char *dst_buf,
                            const void *src_tlv)
 {
   int size;
-  const zl_tlv_cmn_t *common;
-  const zl_tlv_sys_name_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_sys_name_t *obj,
+                    ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_sys_name_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_sys_name_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -468,16 +500,21 @@ zl_tlv_sys_desc_serialize (char *dst_buf,
                            const void *src_tlv)
 {
   int size;
-  const zl_tlv_cmn_t *common;
-  const zl_tlv_sys_desc_t *obj;
+  zl_tlv_cmn_t *common;
+  zl_tlv_sys_desc_t *obj,
+                    ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_sys_desc_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_sys_desc_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -545,15 +582,20 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   uint16_t sys_val,
            enabled_val;
   zl_tlv_cmn_t *common;
-  zl_tlv_sys_cap_t *obj;
+  zl_tlv_sys_cap_t *obj,
+                   ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_sys_cap_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_sys_cap_t *)&ibuf;
 
   size = sizeof(*common) + common->length;
+
+  zl_tlv_common_serialize (common);
 
   sys_val = obj->sys_caps;
   enabled_val = obj->enabled_caps;
@@ -561,10 +603,6 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   obj->sys_caps = htons (sys_val);
   obj->enabled_caps = htons (enabled_val);
   zl_memcpy (dst_buf, obj, size);
-
-  /* Rollback */
-  obj->sys_caps = sys_val;
-  obj->enabled_caps = enabled_val;
 
   return size;
 }
@@ -626,7 +664,8 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
 {
   int size;
   zl_tlv_cmn_t *common;
-  zl_tlv_mgmt_addr_t *obj;
+  zl_tlv_mgmt_addr_t *obj,
+                     ibuf;
   /* Cal variables */
   uint8_t buf[256] = { 0, };
   size_t len = 0,
@@ -635,12 +674,17 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   zl_ret_val_if_fail (dst_buf != NULL, -1);
   zl_ret_val_if_fail (src_tlv != NULL, -1);
 
-  common = (zl_tlv_cmn_t *)src_tlv;
-  obj = (zl_tlv_mgmt_addr_t *)src_tlv;
+  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+
+  common = (zl_tlv_cmn_t *)&ibuf;
+  obj = (zl_tlv_mgmt_addr_t *)&ibuf;
+
   size = sizeof(*common) + common->length;
 
+  zl_tlv_common_serialize (common);
+
   /* TLV header */
-  len = sizeof(*common);
+  len = size;
   /* Management Address String Length */
   len += sizeof(obj->addr_len);
   /* Management Address String */
@@ -663,8 +707,6 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   /* Object Identifier */
   zl_memcpy (buf+len, obj->oid_value, obj->oid_len);
   len += obj->oid_len;
-
-  (void)size;
 
   zl_memcpy (dst_buf, buf, len);
 
