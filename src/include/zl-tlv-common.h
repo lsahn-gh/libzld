@@ -19,6 +19,7 @@
 #define __ZL_TLV_COMMON_H__
 
 #include <stdint.h>
+#include <arpa/inet.h>
 
 #include <priv/zl-macro.h>
 #include <zl-object.h>
@@ -48,11 +49,24 @@ enum
 typedef struct _zl_tlv_cmn_t zl_tlv_cmn_t;
 struct _zl_tlv_cmn_t
 {
-  uint8_t    type : 7;
-  uint16_t   length : 9;
+  uint8_t   type : 7;
+  uint16_t  length : 9;
 } zl_1byte_pack;
 
 #define GET_TLV_COMMON_INSTANCE(tlv) (zl_tlv_cmn_t *)tlv
+
+static inline void
+zl_tlv_common_serialize (zl_tlv_cmn_t *common)
+{
+  uint16_t val = 0;
+
+  zl_ret_if_fail (common != NULL);
+
+  val |= (common->type << 9);
+  val |= (common->length);
+
+  *(uint16_t *)common = htons (val);
+}
 
 /* -- Organizationally Specific TLV Type -- */
 typedef struct _zl_tlv_org_t zl_tlv_org_t;
