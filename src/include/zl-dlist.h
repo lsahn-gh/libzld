@@ -80,6 +80,11 @@ static inline int zl_dlist_add_tail (zl_dlist_t *__head, zl_dlist_t *entry)
   return __zl_list_add(entry, __head->prev, __head);
 }
 
+static inline int zl_dlist_enqueue (zl_dlist_t *__head, zl_dlist_t *entry)
+{
+  return zl_dlist_add_tail (__head, entry);
+}
+
 static inline int __zl_list_del (zl_dlist_t *entry)
 {
   if (entry == NULL)
@@ -114,6 +119,11 @@ static inline void * zl_dlist_remove_head (zl_dlist_t *head)
   return ret;
 }
 
+static inline void * zl_dlist_dequeue (zl_dlist_t *head)
+{
+  return zl_dlist_remove_head (head);
+}
+
 static inline void * zl_dlist_remove_tail (zl_dlist_t *head)
 {
   void * ret = NULL;
@@ -127,6 +137,16 @@ static inline void * zl_dlist_remove_tail (zl_dlist_t *head)
   __zl_list_del (head->prev);
 
   return ret;
+}
+
+static inline void * zl_dlist_peek (zl_dlist_t *head)
+{
+  if (head == NULL)
+    return NULL;
+  if (zl_dlist_empty (head))
+    return NULL;
+
+  return head->next;
 }
 
 #define zl_dlist_foreach(pos, head) \
