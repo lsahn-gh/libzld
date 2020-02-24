@@ -17,9 +17,9 @@
 
 #include <string.h>
 
-#include <zl-mem.h>
-#include <zl-log.h>
-#include <zl-macro.h>
+#include "zl-mem.h"
+#include "zl-log.h"
+#include "zl-macro.h"
 
 void *
 zl_malloc (size_t size)
