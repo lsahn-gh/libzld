@@ -1,9 +1,6 @@
-
-CC = gcc
 CFLAGS = -fPIC -Wall -Wextra -Werror -pedantic -O2 -g
 CFLAGS += -Wno-error=unused-function
 LDFLAGS = -shared
-RM = rm -f
 TARGET_LIB = libzlldp.so
 
 CFLAGS += $(shell find . -type d | xargs printf -- '-I%s ')
