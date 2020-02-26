@@ -78,12 +78,10 @@ zl_tlv_end_lldpdu_new (void)
   common->length = 0;
 
   picky[SERIALIZE_FN].serialize = zl_tlv_end_lldpdu_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_end_lldpdu_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -159,12 +157,10 @@ zl_tlv_chassis_id_new (uint8_t subtype,
   zl_memcpy (new_tlv->value, src, nbytes);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_chassis_id_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_chassis_id_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -240,12 +236,10 @@ zl_tlv_port_id_new (uint8_t subtype,
   zl_memcpy (new_tlv->value, src, nbytes);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_port_id_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_port_id_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -319,12 +313,10 @@ zl_tlv_ttl_new (const uint16_t src)
   new_tlv->value = src;
 
   picky[SERIALIZE_FN].serialize = zl_tlv_ttl_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_ttl_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -398,12 +390,10 @@ zl_tlv_port_desc_new (const uint8_t *src,
   zl_memcpy (new_tlv->value, src, nbytes);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_port_desc_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_port_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -477,12 +467,10 @@ zl_tlv_sys_name_new (const uint8_t *src,
   zl_memcpy (new_tlv->value, src, nbytes);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_sys_name_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_sys_name_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -556,12 +544,10 @@ zl_tlv_sys_desc_new (const uint8_t *src,
   zl_memcpy (new_tlv->value, src, nbytes);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_sys_desc_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_sys_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -640,12 +626,10 @@ zl_tlv_sys_capabilities_new (uint16_t sys_caps,
   new_tlv->enabled_caps = enabled_caps;
 
   picky[SERIALIZE_FN].serialize = zl_tlv_sys_capabilities_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_sys_capabilities_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;
@@ -761,12 +745,10 @@ zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
   zl_memcpy (new_tlv->oid_value, oid_str_val, oid_str_len);
 
   picky[SERIALIZE_FN].serialize = zl_tlv_mgmt_addr_serialize;
-  picky[DESERIALIZE_FN].deserialize = NULL; /* TODO */
   picky[FREE_FN].free = zl_tlv_mgmt_addr_free;
 
   object = zl_object_new_with_tlv_params (common,
                                           picky[SERIALIZE_FN].pointer,
-                                          picky[DESERIALIZE_FN].pointer,
                                           picky[FREE_FN].pointer);
   if ( likely(object != NULL) )
     return object;

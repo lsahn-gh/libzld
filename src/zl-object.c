@@ -25,7 +25,6 @@ struct _zl_object_t
 
   zl_tlv_cmn_t  *tlv;
   fn_serialize_t serialize;
-  fn_deserialize_t deserialize;
   fn_free_t free;
 };
 
@@ -44,7 +43,6 @@ zl_object_new (void)
 zl_object_t *
 zl_object_new_with_tlv_params (void *tlv,
                                void *fn_serialize,
-                               void *fn_deserialize,
                                void *fn_free)
 {
   zl_object_t *new_obj;
@@ -62,9 +60,6 @@ zl_object_new_with_tlv_params (void *tlv,
   picky.pointer = fn_serialize;
   new_obj->serialize = picky.serialize;
 
-  picky.pointer = fn_deserialize;
-  new_obj->deserialize = picky.deserialize;
-
   picky.pointer = fn_free;
   new_obj->free = picky.free;
 
@@ -81,18 +76,6 @@ zl_object_set_fn_serialize (zl_object_t *object, void *new_fn)
 
   picky.pointer = new_fn;
   object->serialize = picky.serialize;
-}
-
-void
-zl_object_set_fn_deserialize (zl_object_t *object, void *new_fn)
-{
-  zl_picky_t picky;
-
-  zl_ret_if_fail (object != NULL);
-  zl_ret_if_fail (new_fn != NULL);
-
-  picky.pointer = new_fn;
-  object->deserialize = picky.deserialize;
 }
 
 void

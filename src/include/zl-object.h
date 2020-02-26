@@ -22,7 +22,6 @@
 #include <zl-tlv-common.h>
 
 typedef int (*fn_serialize_t) (char *, const void *);
-typedef void (*fn_deserialize_t) (void *, const char *);
 typedef void (*fn_free_t) (void *);
 
 typedef struct
@@ -31,7 +30,6 @@ typedef struct
     void *pointer;
 
     fn_serialize_t serialize;
-    fn_deserialize_t deserialize;
     fn_free_t free;
   };
 } zl_picky_t;
@@ -39,7 +37,6 @@ typedef struct
 enum
 {
   SERIALIZE_FN = 0,
-  DESERIALIZE_FN,
   FREE_FN,
   N_FUNCTIONS,
 };
@@ -52,11 +49,8 @@ typedef struct _zl_object_t zl_object_t;
 zl_object_t * zl_object_new                 (void);
 zl_object_t * zl_object_new_with_tlv_params (void *tlv,
                                              void *fn_serialize,
-                                             void *fn_deserialize,
                                              void *fn_free);
 void          zl_object_set_fn_serialize    (zl_object_t *object,
-                                             void *new_fn);
-void          zl_object_set_fn_deserialize  (zl_object_t *object,
                                              void *new_fn);
 void          zl_object_set_fn_free         (zl_object_t *object,
                                              void *new_fn);
