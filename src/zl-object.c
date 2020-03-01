@@ -21,11 +21,11 @@
 
 struct _zl_object_t
 {
-  zl_dlist_t    _;
+  zl_dlist_t      _reserved;
 
-  zl_tlv_cmn_t  *tlv;
-  fn_serialize_t serialize;
-  fn_free_t free;
+  zl_tlv_cmn_t    *tlv;
+  fn_serialize_t  serialize;
+  fn_free_t       free;
 };
 
 zl_object_t *
