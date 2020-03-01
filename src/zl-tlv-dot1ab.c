@@ -20,7 +20,7 @@
 
 #include <priv/zl-mem.h>
 #include <zl-object.h>
-#include <zl-tlv-core.h>
+#include <zl-tlv-dot1ab.h>
 
 /* -- End Of LLDPDU -- */
 static int

@@ -20,6 +20,6 @@
 
 #include <zl-object.h>
 #include <zl-tlv-common.h>
-#include <zl-tlv-core.h>
+#include <zl-tlv-dot1ab.h>
 
 #endif
