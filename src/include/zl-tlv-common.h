@@ -69,8 +69,10 @@ zl_tlv_common_serialize (zl_tlv_cmn_t *common)
 }
 
 /* -- Organizationally Specific TLV Type -- */
-typedef struct _zl_tlv_org_t zl_tlv_org_t;
-struct _zl_tlv_org_t
+typedef struct _zl_tlv_org_spec zl_tlv_org_spec_t;
+#define ZL_GET_ORG_SPEC_OBJ(ptr) ((zl_tlv_org_spec_t *)ptr)
+
+struct _zl_tlv_org_spec
 {
   zl_tlv_cmn_t  parent;
 
