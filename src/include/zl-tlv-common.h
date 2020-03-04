@@ -47,13 +47,13 @@ enum
 
 /* -- Common Type -- */
 typedef struct _zl_tlv_cmn_t zl_tlv_cmn_t;
+#define ZL_GET_TLV_COMMON_OBJ(ptr) ((zl_tlv_cmn_t *)ptr)
+
 struct _zl_tlv_cmn_t
 {
   uint8_t   type : 7;
   uint16_t  length : 9;
 } zl_1byte_pack;
-
-#define GET_TLV_COMMON_INSTANCE(tlv) (zl_tlv_cmn_t *)tlv
 
 static inline void
 zl_tlv_common_serialize (zl_tlv_cmn_t *common)

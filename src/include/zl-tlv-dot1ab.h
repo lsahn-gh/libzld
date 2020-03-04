@@ -25,9 +25,12 @@
 
 /* -- End Of LLDPDU (Mandatory) -- */
 typedef zl_tlv_cmn_t zl_tlv_end_lldpdu_t;
+#define ZL_GET_END_LLDPDU_OBJ(ptr) ((zl_tlv_end_lldpdu_t *)ptr)
 
 /* -- Chassis ID (Mandatory) -- */
 typedef struct _zl_tlv_chassis_id_t zl_tlv_chassis_id_t;
+#define ZL_GET_CHASSIS_ID_OBJ(ptr) ((zl_tlv_chassis_id_t *)ptr)
+
 struct _zl_tlv_chassis_id_t
 {
   zl_tlv_cmn_t  parent;
@@ -48,6 +51,8 @@ struct _zl_tlv_chassis_id_t
 
 /* -- Port ID (Mandatory) -- */
 typedef struct _zl_tlv_port_id_t zl_tlv_port_id_t;
+#define ZL_GET_PORT_ID_OBJ(ptr) ((zl_tlv_port_id_t *)ptr)
+
 struct _zl_tlv_port_id_t
 {
   zl_tlv_cmn_t  parent;
@@ -68,6 +73,8 @@ struct _zl_tlv_port_id_t
 
 /* -- Time To Live (Mandatory) -- */
 typedef struct _zl_tlv_ttl_t zl_tlv_ttl_t;
+#define ZL_GET_TTL_OBJ(ptr) ((zl_tlv_ttl_t *)ptr)
+
 struct _zl_tlv_ttl_t
 {
   zl_tlv_cmn_t  parent;
@@ -77,6 +84,8 @@ struct _zl_tlv_ttl_t
 
 /* -- Port Description (Optional) -- */
 typedef struct _zl_tlv_port_desc_t zl_tlv_port_desc_t;
+#define ZL_GET_PORT_DESC_OBJ(ptr) ((zl_tlv_port_desc_t *)ptr)
+
 struct _zl_tlv_port_desc_t
 {
   zl_tlv_cmn_t  parent;
@@ -86,6 +95,8 @@ struct _zl_tlv_port_desc_t
 
 /* -- System Name (Optional) -- */
 typedef struct _zl_tlv_sys_name_t zl_tlv_sys_name_t;
+#define ZL_GET_SYS_NAME_OBJ(ptr) ((zl_tlv_sys_name_t *)ptr)
+
 struct _zl_tlv_sys_name_t
 {
   zl_tlv_cmn_t  parent;
@@ -95,6 +106,8 @@ struct _zl_tlv_sys_name_t
 
 /* -- System Description (Optional) -- */
 typedef struct _zl_tlv_sys_desc_t zl_tlv_sys_desc_t;
+#define ZL_GET_SYS_DESC_OBJ(ptr) ((zl_tlv_sys_desc_t *)ptr)
+
 struct _zl_tlv_sys_desc_t
 {
   zl_tlv_cmn_t  parent;
@@ -104,6 +117,8 @@ struct _zl_tlv_sys_desc_t
 
 /* -- System Capabilities (Optional) -- */
 typedef struct _zl_tlv_sys_cap_t zl_tlv_sys_cap_t;
+#define ZL_GET_SYS_CAP_OBJ(ptr) ((zl_tlv_sys_cap_t *)ptr)
+
 struct _zl_tlv_sys_cap_t
 {
   zl_tlv_cmn_t  parent;
@@ -124,6 +139,8 @@ struct _zl_tlv_sys_cap_t
 
 /* -- Management Address (Optional) -- */
 typedef struct _zl_tlv_mgmt_addr_t zl_tlv_mgmt_addr_t;
+#define ZL_GET_MGMT_ADDR_OBJ(ptr) ((zl_tlv_mgmt_addr_t *)ptr)
+
 struct _zl_tlv_mgmt_addr_t
 {
   zl_tlv_cmn_t  parent;
