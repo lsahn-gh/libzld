@@ -93,10 +93,10 @@ zl_object_set_fn_free (zl_object_t *object, void *new_fn)
 int
 zl_object_serialize_tlv (zl_object_t *object, char *out_buf)
 {
-  int ret = -1;
+  int ret = 0;
 
-  zl_ret_val_if_fail (object != NULL, -1);
-  zl_ret_val_if_fail (out_buf != NULL, -1);
+  zl_ret_val_if_fail (object != NULL, 0);
+  zl_ret_val_if_fail (out_buf != NULL, 0);
 
   if (object->serialize)
     ret = object->serialize (out_buf, object->tlv);

@@ -128,13 +128,9 @@ main (int argc,
 
   /* Serialize all the objects */
   zl_dlist_foreach_safe (cursor, n, &lldp) {
-    int ret;
     zl_object_t *obj = ZL_GET_OBJECT (cursor);
 
-    ret = zl_object_serialize_tlv (obj, buf+size);
-    if (ret != -1) {
-      size += ret;
-    }
+    size += zl_object_serialize_tlv (obj, buf+size);
 
     /* Free */
     zl_dlist_remove (cursor);

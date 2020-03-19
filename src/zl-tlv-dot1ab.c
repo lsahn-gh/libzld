@@ -32,8 +32,8 @@ zl_tlv_end_lldpdu_serialize (char *dst_buf,
   zl_tlv_end_lldpdu_t *obj,
                       ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -103,8 +103,8 @@ zl_tlv_chassis_id_serialize (char *dst_buf,
   zl_tlv_chassis_id_t *obj,
                       ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -182,8 +182,8 @@ zl_tlv_port_id_serialize (char *dst_buf,
   zl_tlv_port_id_t *obj,
                    ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -262,8 +262,8 @@ zl_tlv_ttl_serialize (char *dst_buf,
   zl_tlv_ttl_t *obj,
                ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -338,8 +338,8 @@ zl_tlv_port_desc_serialize (char *dst_buf,
   zl_tlv_port_desc_t *obj,
                      ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -415,8 +415,8 @@ zl_tlv_sys_name_serialize (char *dst_buf,
   zl_tlv_sys_name_t *obj,
                     ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -492,8 +492,8 @@ zl_tlv_sys_desc_serialize (char *dst_buf,
   zl_tlv_sys_desc_t *obj,
                     ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -571,8 +571,8 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   zl_tlv_sys_cap_t *obj,
                    ibuf;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
@@ -655,8 +655,8 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   size_t len = 0,
          cal_size = 0;
 
-  zl_ret_val_if_fail (dst_buf != NULL, -1);
-  zl_ret_val_if_fail (src_tlv != NULL, -1);
+  zl_ret_val_if_fail (dst_buf != NULL, 0);
+  zl_ret_val_if_fail (src_tlv != NULL, 0);
 
   zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
 
