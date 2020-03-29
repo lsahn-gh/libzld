@@ -207,11 +207,31 @@ int           zl_tlv_sys_desc_serialize   (char *dst_buf,
 void          zl_tlv_sys_desc_free        (void *tlv);
 
 /* -- System Capabilities -- */
-zl_object_t * zl_tlv_sys_capabilities_new (uint16_t sys_caps,
-                                           uint16_t enabled_caps);
+zl_object_t * zl_tlv_sys_capabilities_new       (uint16_t sys_caps,
+                                                 uint16_t enabled_caps);
 int           zl_tlv_sys_capabilities_serialize (char *dst_buf,
                                                  const void *src_tlv);
-void          zl_tlv_sys_capabilities_free (void *tlv);
+void          zl_tlv_sys_capabilities_free      (void *tlv);
+
+static inline zl_object_t *
+zl_tlv_sys_capab_new (uint16_t sys_caps,
+                      uint16_t enabled_caps)
+{
+  return zl_tlv_sys_capabilities_new (sys_caps, enabled_caps);
+}
+
+static inline int
+zl_tlv_sys_capab_serialize (char *dst_buf,
+                            const void *src_tlv)
+{
+  return zl_tlv_sys_capabilities_serialize (dst_buf, src_tlv);
+}
+
+static inline void
+zl_tlv_sys_capab_free (void *tlv)
+{
+  zl_tlv_sys_capabilities_free (tlv);
+}
 
 /* -- Management Address -- */
 zl_object_t * zl_tlv_mgmt_addr_new        (uint8_t mgmt_addr_len,
