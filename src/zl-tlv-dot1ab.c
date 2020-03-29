@@ -23,7 +23,7 @@
 #include <zl-tlv-dot1ab.h>
 
 /* -- End Of LLDPDU -- */
-static int
+int
 zl_tlv_end_lldpdu_serialize (char *dst_buf,
                              const void *src_tlv)
 {
@@ -49,7 +49,7 @@ zl_tlv_end_lldpdu_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_end_lldpdu_free (void *tlv)
 {
   zl_tlv_end_lldpdu_t *obj;
@@ -94,7 +94,7 @@ error:
 
 
 /* -- Chassis ID -- */
-static int
+int
 zl_tlv_chassis_id_serialize (char *dst_buf,
                              const void *src_tlv)
 {
@@ -120,7 +120,7 @@ zl_tlv_chassis_id_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_chassis_id_free (void *tlv)
 {
   zl_tlv_chassis_id_t *obj;
@@ -173,7 +173,7 @@ error:
 
 
 /* -- Port ID -- */
-static int
+int
 zl_tlv_port_id_serialize (char *dst_buf,
                           const void *src_tlv)
 {
@@ -199,7 +199,7 @@ zl_tlv_port_id_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_port_id_free (void *tlv)
 {
   zl_tlv_port_id_t *obj;
@@ -252,7 +252,7 @@ error:
 
 
 /* -- Time To Live -- */
-static int
+int
 zl_tlv_ttl_serialize (char *dst_buf,
                       const void *src_tlv)
 {
@@ -282,7 +282,7 @@ zl_tlv_ttl_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_ttl_free (void *tlv)
 {
   zl_tlv_ttl_t *obj;
@@ -329,7 +329,7 @@ error:
 
 
 /* -- Port Description -- */
-static int
+int
 zl_tlv_port_desc_serialize (char *dst_buf,
                             const void *src_tlv)
 {
@@ -355,7 +355,7 @@ zl_tlv_port_desc_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_port_desc_free (void *tlv)
 {
   zl_tlv_port_desc_t *obj;
@@ -406,7 +406,7 @@ error:
 
 
 /* -- System Name -- */
-static int
+int
 zl_tlv_sys_name_serialize (char *dst_buf,
                            const void *src_tlv)
 {
@@ -432,7 +432,7 @@ zl_tlv_sys_name_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_sys_name_free (void *tlv)
 {
   zl_tlv_sys_name_t *obj;
@@ -483,7 +483,7 @@ error:
 
 
 /* -- System Description -- */
-static int
+int
 zl_tlv_sys_desc_serialize (char *dst_buf,
                            const void *src_tlv)
 {
@@ -509,7 +509,7 @@ zl_tlv_sys_desc_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_sys_desc_free (void *tlv)
 {
   zl_tlv_sys_desc_t *obj;
@@ -560,7 +560,7 @@ error:
 
 
 /* -- System Capabilities -- */
-static int
+int
 zl_tlv_sys_capabilities_serialize (char *dst_buf,
                                    const void *src_tlv)
 {
@@ -593,7 +593,7 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   return size;
 }
 
-static void
+void
 zl_tlv_sys_capabilities_free (void *tlv)
 {
   zl_tlv_sys_cap_t *obj;
@@ -642,7 +642,7 @@ error:
 
 
 /* -- Management Address -- */
-static int
+int
 zl_tlv_mgmt_addr_serialize (char *dst_buf,
                             const void *src_tlv)
 {
@@ -697,7 +697,7 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   return len;
 }
 
-static void
+void
 zl_tlv_mgmt_addr_free (void *tlv)
 {
   zl_tlv_mgmt_addr_t *obj;
