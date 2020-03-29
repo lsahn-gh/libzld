@@ -157,11 +157,13 @@ struct _zl_tlv_mgmt_addr_t
   uint8_t       oid_value[128];
 } zl_1byte_pack;
 
+
 /* -- End Of LLDPDU -- */
 zl_object_t * zl_tlv_end_lldpdu_new       (void);
 int           zl_tlv_end_lldpdu_serialize (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_end_lldpdu_free      (void *tlv);
+
 
 /* -- Chassis ID -- */
 zl_object_t * zl_tlv_chassis_id_new       (uint8_t subtype,
@@ -171,6 +173,7 @@ int           zl_tlv_chassis_id_serialize (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_chassis_id_free      (void *tlv);
 
+
 /* -- Port ID -- */
 zl_object_t * zl_tlv_port_id_new          (uint8_t subtype,
                                            const uint8_t *src,
@@ -179,11 +182,13 @@ int           zl_tlv_port_id_serialize    (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_port_id_free         (void *tlv);
 
+
 /* -- Time To Live -- */
 zl_object_t * zl_tlv_ttl_new              (uint16_t src);
 int           zl_tlv_ttl_serialize        (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_ttl_free             (void *tlv);
+
 
 /* -- Port Description -- */
 zl_object_t * zl_tlv_port_desc_new        (const uint8_t *src,
@@ -192,6 +197,7 @@ int           zl_tlv_port_desc_serialize  (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_port_desc_free       (void *tlv);
 
+
 /* -- System Name -- */
 zl_object_t * zl_tlv_sys_name_new         (const uint8_t *src,
                                            const size_t nbytes);
@@ -199,12 +205,14 @@ int           zl_tlv_sys_name_serialize   (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_sys_name_free        (void *tlv);
 
+
 /* -- System Description -- */
 zl_object_t * zl_tlv_sys_desc_new         (const uint8_t *src,
                                            const size_t nbytes);
 int           zl_tlv_sys_desc_serialize   (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_sys_desc_free        (void *tlv);
+
 
 /* -- System Capabilities -- */
 zl_object_t * zl_tlv_sys_capabilities_new       (uint16_t sys_caps,
@@ -232,6 +240,7 @@ zl_tlv_sys_capab_free (void *tlv)
 {
   zl_tlv_sys_capabilities_free (tlv);
 }
+
 
 /* -- Management Address -- */
 zl_object_t * zl_tlv_mgmt_addr_new        (uint8_t mgmt_addr_len,
