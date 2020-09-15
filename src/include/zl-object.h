@@ -21,6 +21,10 @@
 #include <priv/zl-macro.h>
 #include <zl-tlv-common.h>
 
+#include <zl-bind.h>
+
+ZL_BEGIN_DECLS
+
 typedef int (*fn_serialize_t) (char *, const void *);
 typedef void (*fn_free_t) (void *);
 
@@ -57,5 +61,7 @@ void          zl_object_set_fn_free         (zl_object_t *object,
 int           zl_object_serialize_tlv       (zl_object_t *object,
                                              char *out_buf);
 void          zl_object_free                (zl_object_t *object);
+
+ZL_END_DECLS
 
 #endif

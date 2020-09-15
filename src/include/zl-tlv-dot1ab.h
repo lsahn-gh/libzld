@@ -23,6 +23,10 @@
 #include <priv/zl-macro.h>
 #include <zl-tlv-common.h>
 
+#include <zl-bind.h>
+
+ZL_BEGIN_DECLS
+
 /* -- End Of LLDPDU (Mandatory) -- */
 typedef zl_tlv_cmn_t zl_tlv_end_lldpdu_t;
 #define ZL_GET_END_LLDPDU_OBJ(ptr) ((zl_tlv_end_lldpdu_t *)ptr)
@@ -253,5 +257,7 @@ zl_object_t * zl_tlv_mgmt_addr_new        (uint8_t mgmt_addr_len,
 int           zl_tlv_mgmt_addr_serialize  (char *dst_buf,
                                            const void *src_tlv);
 void          zl_tlv_mgmt_addr_free       (void *tlv);
+
+ZL_END_DECLS
 
 #endif

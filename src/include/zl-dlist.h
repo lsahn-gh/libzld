@@ -22,6 +22,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 
+#include <zl-bind.h>
+
+ZL_BEGIN_DECLS
+
 typedef struct _zl_dlist_t zl_dlist_t;
 struct _zl_dlist_t {
   struct _zl_dlist_t *prev, *next;
@@ -154,5 +158,7 @@ static inline void * zl_dlist_peek (zl_dlist_t *head)
 
 #define zl_dlist_foreach_safe(pos, n, head) \
   for (pos = (head)->next, n = pos->next; pos != (head); pos = n, n = pos->next)
+
+ZL_END_DECLS
 
 #endif

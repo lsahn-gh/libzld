@@ -24,6 +24,10 @@
 #include <priv/zl-macro.h>
 #include <zl-object.h>
 
+#include <zl-bind.h>
+
+ZL_BEGIN_DECLS
+
 enum
 {
   /* -- Mandatory TLVs -- */
@@ -79,5 +83,7 @@ struct _zl_tlv_org_spec
   uint8_t       oui[3];
   uint8_t       subtype;
 } zl_1byte_pack;
+
+ZL_END_DECLS
 
 #endif
