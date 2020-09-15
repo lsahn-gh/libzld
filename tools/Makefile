@@ -1,6 +1,6 @@
 CFLAGS = -I../src -I../src/include
 CFLAGS += -g
-LDFLAGS = -L../src -lzlldp
+LDFLAGS = -L../src -lzld
 
 SOURCES = $(shell find . -name "*.c")
 OBJS = $(SOURCES:.c=.o)

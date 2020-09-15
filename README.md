@@ -1,5 +1,5 @@
-# zlldp
-This is a LLDP Protocol library based on 802.1ab specification document and focus on,
+# libzld
+This is a LLDP Protocol library based on 802.1AB specification document and focus on,
 - Stability
 - Leak-Free
 - Easy APIs

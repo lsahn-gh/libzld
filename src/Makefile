@@ -1,7 +1,7 @@
 CFLAGS = -fPIC -Wall -Wextra -Werror -pedantic -O2 -g
 CFLAGS += -Wno-error=unused-function
 LDFLAGS = -shared
-TARGET_LIB = libzlldp.so
+TARGET_LIB = libzld.so
 
 CFLAGS += $(shell find . -type d | xargs printf -- '-I%s ')
 SOURCES = $(shell find . -name "*.c")
