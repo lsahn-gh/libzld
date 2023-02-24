@@ -1,6 +1,6 @@
 /* zl-mem.h
  *
- * Copyright 2019-2020 Leesoo Ahn <dev@ooseel.net>
+ * Copyright 2019-2023 Leesoo Ahn <lsahn@ooseel.net>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
