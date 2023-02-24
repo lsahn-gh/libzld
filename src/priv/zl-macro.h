@@ -20,8 +20,6 @@
 
 #include <assert.h>
 
-#include "zl-log.h"
-
 #define zl_ret_if(expr) \
   do { \
     if ((expr)) { \
