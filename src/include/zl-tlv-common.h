@@ -21,10 +21,10 @@
 #include <stdint.h>
 #include <arpa/inet.h>
 
-#include <priv/zl-macro.h>
-#include <zl-object.h>
+#include "zl-macro.h"
+#include "zl-object.h"
 
-#include <zl-bind.h>
+#include "zl-bind.h"
 
 ZL_BEGIN_DECLS
 

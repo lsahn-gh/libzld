@@ -18,8 +18,8 @@
 #ifndef __ZL_TLV_TYPE_H__
 #define __ZL_TLV_TYPE_H__
 
-#include <zl-object.h>
-#include <zl-tlv-common.h>
-#include <zl-tlv-dot1ab.h>
+#include "zl-object.h"
+#include "zl-tlv-common.h"
+#include "zl-tlv-dot1ab.h"
 
 #endif

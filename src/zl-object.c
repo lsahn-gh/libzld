@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#include <priv/zl-mem.h>
+#include <zl-mem.h>
 #include <zl-object.h>
 #include <zl-dlist.h>
 

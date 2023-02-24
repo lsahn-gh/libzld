@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include <zl-bind.h>
+#include "zl-bind.h"
 
 ZL_BEGIN_DECLS
 

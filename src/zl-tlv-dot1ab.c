@@ -18,7 +18,7 @@
 #include <string.h>
 #include <arpa/inet.h>
 
-#include <priv/zl-mem.h>
+#include <zl-mem.h>
 #include <zl-object.h>
 #include <zl-tlv-dot1ab.h>
 

@@ -18,10 +18,10 @@
 #ifndef __ZL_OBJECT_H__
 #define __ZL_OBJECT_H__
 
-#include <priv/zl-macro.h>
-#include <zl-tlv-common.h>
+#include "zl-macro.h"
+#include "zl-tlv-common.h"
 
-#include <zl-bind.h>
+#include "zl-bind.h"
 
 ZL_BEGIN_DECLS
 

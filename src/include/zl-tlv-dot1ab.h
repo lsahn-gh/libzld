@@ -20,10 +20,10 @@
 
 #include <stdint.h>
 
-#include <priv/zl-macro.h>
-#include <zl-tlv-common.h>
+#include "zl-macro.h"
+#include "zl-tlv-common.h"
 
-#include <zl-bind.h>
+#include "zl-bind.h"
 
 ZL_BEGIN_DECLS
 
