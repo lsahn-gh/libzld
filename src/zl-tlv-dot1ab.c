@@ -50,7 +50,7 @@ tlv_serialize_ng (char *dst_buf,
 /* -- End Of LLDPDU -- */
 #define zl_tlv_end_lldpdu_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_end_lldpdu_free (void *tlv)
 {
   zl_tlv_end_lldpdu_t *obj;
@@ -97,7 +97,7 @@ error:
 /* -- Chassis ID -- */
 #define zl_tlv_chassis_id_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_chassis_id_free (void *tlv)
 {
   zl_tlv_chassis_id_t *obj;
@@ -152,7 +152,7 @@ error:
 /* -- Port ID -- */
 #define zl_tlv_port_id_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_port_id_free (void *tlv)
 {
   zl_tlv_port_id_t *obj;
@@ -205,7 +205,7 @@ error:
 
 
 /* -- Time To Live -- */
-int
+static int
 zl_tlv_ttl_serialize (char *dst_buf,
                       const void *src_tlv)
 {
@@ -233,7 +233,7 @@ zl_tlv_ttl_serialize (char *dst_buf,
   return size;
 }
 
-void
+static void
 zl_tlv_ttl_free (void *tlv)
 {
   zl_tlv_ttl_t *obj;
@@ -282,7 +282,7 @@ error:
 /* -- Port Description -- */
 #define zl_tlv_port_desc_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_port_desc_free (void *tlv)
 {
   zl_tlv_port_desc_t *obj;
@@ -335,7 +335,7 @@ error:
 /* -- System Name -- */
 #define zl_tlv_sys_name_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_sys_name_free (void *tlv)
 {
   zl_tlv_sys_name_t *obj;
@@ -388,7 +388,7 @@ error:
 /* -- System Description -- */
 #define zl_tlv_sys_desc_serialize_ng tlv_serialize_ng
 
-void
+static void
 zl_tlv_sys_desc_free (void *tlv)
 {
   zl_tlv_sys_desc_t *obj;
@@ -439,7 +439,7 @@ error:
 
 
 /* -- System Capabilities -- */
-int
+static int
 zl_tlv_sys_capabilities_serialize (char *dst_buf,
                                    const void *src_tlv)
 {
@@ -472,7 +472,7 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   return size;
 }
 
-void
+static void
 zl_tlv_sys_capabilities_free (void *tlv)
 {
   zl_tlv_sys_cap_t *obj;
@@ -521,7 +521,7 @@ error:
 
 
 /* -- Management Address -- */
-int
+static int
 zl_tlv_mgmt_addr_serialize (char *dst_buf,
                             const void *src_tlv)
 {
@@ -576,7 +576,7 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   return len;
 }
 
-void
+static void
 zl_tlv_mgmt_addr_free (void *tlv)
 {
   zl_tlv_mgmt_addr_t *obj;

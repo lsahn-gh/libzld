@@ -163,100 +163,46 @@ struct _zl_tlv_mgmt_addr_t
 
 
 /* -- End Of LLDPDU -- */
-zl_object_t * zl_tlv_end_lldpdu_new       (void);
-int           zl_tlv_end_lldpdu_serialize (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_end_lldpdu_free      (void *tlv);
-
+zl_object_t * zl_tlv_end_lldpdu_new (void);
 
 /* -- Chassis ID -- */
-zl_object_t * zl_tlv_chassis_id_new       (uint8_t subtype,
-                                           const uint8_t *src,
-                                           const size_t nbytes);
-int           zl_tlv_chassis_id_serialize (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_chassis_id_free      (void *tlv);
-
+zl_object_t * zl_tlv_chassis_id_new (uint8_t subtype,
+                                     const uint8_t *src,
+                                     const size_t nbytes);
 
 /* -- Port ID -- */
-zl_object_t * zl_tlv_port_id_new          (uint8_t subtype,
-                                           const uint8_t *src,
-                                           const size_t nbytes);
-int           zl_tlv_port_id_serialize    (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_port_id_free         (void *tlv);
-
+zl_object_t * zl_tlv_port_id_new (uint8_t subtype,
+                                  const uint8_t *src,
+                                  const size_t nbytes);
 
 /* -- Time To Live -- */
-zl_object_t * zl_tlv_ttl_new              (uint16_t src);
-int           zl_tlv_ttl_serialize        (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_ttl_free             (void *tlv);
-
+zl_object_t * zl_tlv_ttl_new (uint16_t src);
 
 /* -- Port Description -- */
-zl_object_t * zl_tlv_port_desc_new        (const uint8_t *src,
-                                           const size_t nbytes);
-int           zl_tlv_port_desc_serialize  (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_port_desc_free       (void *tlv);
-
+zl_object_t * zl_tlv_port_desc_new (const uint8_t *src,
+                                    const size_t nbytes);
 
 /* -- System Name -- */
-zl_object_t * zl_tlv_sys_name_new         (const uint8_t *src,
-                                           const size_t nbytes);
-int           zl_tlv_sys_name_serialize   (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_sys_name_free        (void *tlv);
-
+zl_object_t * zl_tlv_sys_name_new (const uint8_t *src,
+                                   const size_t nbytes);
 
 /* -- System Description -- */
-zl_object_t * zl_tlv_sys_desc_new         (const uint8_t *src,
-                                           const size_t nbytes);
-int           zl_tlv_sys_desc_serialize   (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_sys_desc_free        (void *tlv);
-
+zl_object_t * zl_tlv_sys_desc_new (const uint8_t *src,
+                                   const size_t nbytes);
 
 /* -- System Capabilities -- */
-zl_object_t * zl_tlv_sys_capabilities_new       (uint16_t sys_caps,
-                                                 uint16_t enabled_caps);
-int           zl_tlv_sys_capabilities_serialize (char *dst_buf,
-                                                 const void *src_tlv);
-void          zl_tlv_sys_capabilities_free      (void *tlv);
-
-static inline zl_object_t *
-zl_tlv_sys_capab_new (uint16_t sys_caps,
-                      uint16_t enabled_caps)
-{
-  return zl_tlv_sys_capabilities_new (sys_caps, enabled_caps);
-}
-
-static inline int
-zl_tlv_sys_capab_serialize (char *dst_buf,
-                            const void *src_tlv)
-{
-  return zl_tlv_sys_capabilities_serialize (dst_buf, src_tlv);
-}
-
-static inline void
-zl_tlv_sys_capab_free (void *tlv)
-{
-  zl_tlv_sys_capabilities_free (tlv);
-}
-
+zl_object_t * zl_tlv_sys_capabilities_new (uint16_t sys_caps,
+                                           uint16_t enabled_caps);
+#define zl_tlv_sys_capab_new zl_tlv_sys_capabilities_new
 
 /* -- Management Address -- */
-zl_object_t * zl_tlv_mgmt_addr_new        (uint8_t mgmt_addr_len,
-                                           uint8_t mgmt_addr_subtype,
-                                           uint8_t *mgmt_addr_val,
-                                           uint8_t iface_subtype,
-                                           uint32_t iface_number,
-                                           uint8_t oid_str_len,
-                                           uint8_t *oid_str_val);
-int           zl_tlv_mgmt_addr_serialize  (char *dst_buf,
-                                           const void *src_tlv);
-void          zl_tlv_mgmt_addr_free       (void *tlv);
+zl_object_t * zl_tlv_mgmt_addr_new (uint8_t mgmt_addr_len,
+                                    uint8_t mgmt_addr_subtype,
+                                    uint8_t *mgmt_addr_val,
+                                    uint8_t iface_subtype,
+                                    uint32_t iface_number,
+                                    uint8_t oid_str_len,
+                                    uint8_t *oid_str_val);
 
 ZL_END_DECLS
 
