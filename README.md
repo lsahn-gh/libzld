@@ -1,25 +1,20 @@
-# libzld
-This is a LLDP Protocol library based on 802.1AB specification document and focus on,
-- Stability
-- Leak-Free
-- Easy APIs
+LLDP(Link Layer Discovery Protocol) is a link layer protocol for gathering any information such as System name and description, Port name and description, VLAN name, IP management address and so on. These information is specified in IEEE 802.1AB and others.Currently this library supports the below specifications.
 
-## Build Steps
-```
+1. IEEE 802.1AB
+
+## Build/Install Library
+```sh
+$ ./autogen.sh
+$ ./configure
 $ make
+$ make install
 ```
 
-## Run Demo
-```
-$ sudo LD_LIBRARY_PATH=../src tools/send <interface>
-```
-
-## Debug Steps
-```
-$ sudo LD_LIBRARY_PATH=../src gdb tools/send
+## Build Tests and Examples
+```sh
+$ ./autogen.sh
+$ ./configure --enable-tools
+$ make
+$ ls tools
 ```
 
-## Contribution
-If you are eager to contribute to this project, welcome! But all about coding standard of this project is on the code. The code is like a textbook.
-
-Happy Hacking!
