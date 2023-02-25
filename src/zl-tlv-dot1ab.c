@@ -47,19 +47,21 @@ tlv_serialize_ng (char *dst_buf,
   return size;
 }
 
+static void
+tlv_free_ng (void *tlv)
+{
+  zl_ret_if_fail (tlv != NULL);
+
+  zl_free (tlv);
+}
+
 /* -- End Of LLDPDU -- */
 #define zl_tlv_end_lldpdu_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_end_lldpdu_free (void *tlv)
 {
-  zl_tlv_end_lldpdu_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_end_lldpdu_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -97,16 +99,10 @@ error:
 /* -- Chassis ID -- */
 #define zl_tlv_chassis_id_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_chassis_id_free (void *tlv)
 {
-  zl_tlv_chassis_id_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_chassis_id_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -152,16 +148,10 @@ error:
 /* -- Port ID -- */
 #define zl_tlv_port_id_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_port_id_free (void *tlv)
 {
-  zl_tlv_port_id_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_port_id_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -233,16 +223,10 @@ zl_tlv_ttl_serialize (char *dst_buf,
   return size;
 }
 
-static void
+static inline void
 zl_tlv_ttl_free (void *tlv)
 {
-  zl_tlv_ttl_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_ttl_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -282,16 +266,10 @@ error:
 /* -- Port Description -- */
 #define zl_tlv_port_desc_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_port_desc_free (void *tlv)
 {
-  zl_tlv_port_desc_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_port_desc_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -335,16 +313,10 @@ error:
 /* -- System Name -- */
 #define zl_tlv_sys_name_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_sys_name_free (void *tlv)
 {
-  zl_tlv_sys_name_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_sys_name_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -388,16 +360,10 @@ error:
 /* -- System Description -- */
 #define zl_tlv_sys_desc_serialize_ng tlv_serialize_ng
 
-static void
+static inline void
 zl_tlv_sys_desc_free (void *tlv)
 {
-  zl_tlv_sys_desc_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_sys_desc_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -472,16 +438,10 @@ zl_tlv_sys_capabilities_serialize (char *dst_buf,
   return size;
 }
 
-static void
+static inline void
 zl_tlv_sys_capabilities_free (void *tlv)
 {
-  zl_tlv_sys_cap_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_sys_cap_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
@@ -576,16 +536,10 @@ zl_tlv_mgmt_addr_serialize (char *dst_buf,
   return len;
 }
 
-static void
+static inline void
 zl_tlv_mgmt_addr_free (void *tlv)
 {
-  zl_tlv_mgmt_addr_t *obj;
-
-  zl_ret_if_fail (tlv != NULL);
-
-  obj = (zl_tlv_mgmt_addr_t *)tlv;
-
-  zl_free (obj);
+  tlv_free_ng (tlv);
 }
 
 zl_object_t *
