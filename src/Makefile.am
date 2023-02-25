@@ -22,4 +22,4 @@ libzld_la_LIBADD =
 libzld_la_LDFLAGS = -version-info $(LIBZLD_API_LIBTOOL)
 libzld_la_SOURCES = $(lib_sources) 
 libzld_la_HEADERS = $(lib_headers)
-libzld_ladir = $(includedir)/zld/zld-@LIBZLD_API_VERSION@
+libzld_ladir = $(includedir)/zld/zld-@API_VERSION@

@@ -1,0 +1,15 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+datarootdir=@datarootdir@
+datadir=@datadir@
+includedir=@includedir@
+apiversion=@API_VERSION@
+
+Name: libzld
+Description: object-oriented LLDP protocol library
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lzld-${apiversion}
+Cflags: -I${includedir}/zld/zld-@API_VERSION@
+
