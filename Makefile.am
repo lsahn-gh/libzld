@@ -1,8 +1,8 @@
-if ENABLE_TOOLS
-TOOLS_DIR = tools
+if ENABLE_TESTS
+TESTS_DIR = tests
 endif
-SUBDIRS = src $(TOOLS_DIR)
-DIST_SUBDIRS = src $(TOOLS_DIR)
+SUBDIRS = src $(TESTS_DIR)
+DIST_SUBDIRS = src $(TESTS_DIR)
 
 libzld-$(API_VERSION).pc: libzld.pc
 	$(AM_V_GEN)cp $< $@
@@ -15,4 +15,4 @@ CLEANFILES = $(pkgconfig_DATA)
 all-local: libzld-$(API_VERSION).pc
 
 cleanup: distclean
-	rm -rf src/*.in* tools/*.in* Makefile.in *.m4 configure configure~ build-aux autom4te.cache
+	rm -rf src/*.in* tests/*.in* Makefile.in *.m4 configure configure~ build-aux autom4te.cache

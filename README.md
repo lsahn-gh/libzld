@@ -13,8 +13,8 @@ $ make install
 ## Build Tests and Examples
 ```sh
 $ ./autogen.sh
-$ ./configure --enable-tools
+$ ./configure --enable-tests
 $ make
-$ ls tools
+$ ls tests
 ```
 

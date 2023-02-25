@@ -27,22 +27,22 @@ AC_DEFINE_UNQUOTED(API_VERSION, [$API_VERSION], [API version])
 # https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
 AC_SUBST([LIBZLD_API_LIBTOOL], [api_cur:api_rev:api_age])
 
-AC_ARG_ENABLE([tools],
-  AS_HELP_STRING([--enable-tools],[build tools directory]),
+AC_ARG_ENABLE([tests],
+  AS_HELP_STRING([--enable-tests],[build tests directory]),
   [
     case "${enableval}" in
-      yes) ENABLE_TOOLS=yes ;;
-      no)  ENABLE_TOOLS=no ;;
-      *)   AC_MSG_ERROR([bad value ${enableval} for --enable-tools]) ;;
+      yes) ENABLE_TESTS=yes ;;
+      no)  ENABLE_TESTS=no ;;
+      *)   AC_MSG_ERROR([bad value ${enableval} for --enable-tests]) ;;
     esac
   ],
-  [ENABLE_TOOLS=false])
-AM_CONDITIONAL(ENABLE_TOOLS, test "x$ENABLE_TOOLS" = "xyes")
+  [ENABLE_TESTS=false])
+AM_CONDITIONAL(ENABLE_TESTS, test "x$ENABLE_TESTS" = "xyes")
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  libzld.pc])
-if test "x$ENABLE_TOOLS" = "xyes"; then
-  AC_CONFIG_FILES([tools/Makefile])
+if test "x$ENABLE_TESTS" = "xyes"; then
+  AC_CONFIG_FILES([tests/Makefile])
 fi
 AC_OUTPUT
