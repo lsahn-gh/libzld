@@ -22,32 +22,33 @@
 #include <zl-object.h>
 #include <zl-tlv-dot1ab.h>
 
-/* -- End Of LLDPDU -- */
-int
-zl_tlv_end_lldpdu_serialize (char *dst_buf,
-                             const void *src_tlv)
+/* -- Common Serializer -- */
+static int
+tlv_serialize_ng (char *dst_buf,
+                  const void *src_tlv)
 {
   int size;
+  static char stack[512]; /* internal buffer */
   zl_tlv_cmn_t *common;
-  zl_tlv_end_lldpdu_t *obj,
-                      ibuf;
 
   zl_ret_val_if_fail (dst_buf != NULL, 0);
   zl_ret_val_if_fail (src_tlv != NULL, 0);
 
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
+  common = ZL_GET_TLV_COMMON_OBJ(src_tlv);
+  size = sizeof(*common) + common->length;
 
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_end_lldpdu_t *)&ibuf;
+  zl_memcpy (stack, src_tlv, size);
 
-  size = sizeof(*obj);
-
+  common = ZL_GET_TLV_COMMON_OBJ(stack);
   zl_tlv_common_serialize (common);
 
-  zl_memcpy (dst_buf, obj, size);
+  zl_memcpy (dst_buf, stack, size);
 
   return size;
 }
+
+/* -- End Of LLDPDU -- */
+#define zl_tlv_end_lldpdu_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_end_lldpdu_free (void *tlv)
@@ -77,7 +78,7 @@ zl_tlv_end_lldpdu_new (void)
   common->type = TLV_END_OF_LLDPDU;
   common->length = 0;
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_end_lldpdu_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_end_lldpdu_serialize_ng;
   picky[FREE_FN].free = zl_tlv_end_lldpdu_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -94,31 +95,7 @@ error:
 
 
 /* -- Chassis ID -- */
-int
-zl_tlv_chassis_id_serialize (char *dst_buf,
-                             const void *src_tlv)
-{
-  int size;
-  zl_tlv_cmn_t *common;
-  zl_tlv_chassis_id_t *obj,
-                      ibuf;
-
-  zl_ret_val_if_fail (dst_buf != NULL, 0);
-  zl_ret_val_if_fail (src_tlv != NULL, 0);
-
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
-
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_chassis_id_t *)&ibuf;
-
-  size = sizeof(*common) + common->length;
-
-  zl_tlv_common_serialize (common);
-
-  zl_memcpy (dst_buf, obj, size);
-
-  return size;
-}
+#define zl_tlv_chassis_id_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_chassis_id_free (void *tlv)
@@ -156,7 +133,7 @@ zl_tlv_chassis_id_new (uint8_t subtype,
   new_tlv->subtype = subtype;
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_chassis_id_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_chassis_id_serialize_ng;
   picky[FREE_FN].free = zl_tlv_chassis_id_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -173,31 +150,7 @@ error:
 
 
 /* -- Port ID -- */
-int
-zl_tlv_port_id_serialize (char *dst_buf,
-                          const void *src_tlv)
-{
-  int size;
-  zl_tlv_cmn_t *common;
-  zl_tlv_port_id_t *obj,
-                   ibuf;
-
-  zl_ret_val_if_fail (dst_buf != NULL, 0);
-  zl_ret_val_if_fail (src_tlv != NULL, 0);
-
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
-
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_port_id_t *)&ibuf;
-
-  size = sizeof(*common) + common->length;
-
-  zl_tlv_common_serialize (common);
-
-  zl_memcpy (dst_buf, obj, size);
-
-  return size;
-}
+#define zl_tlv_port_id_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_port_id_free (void *tlv)
@@ -235,7 +188,7 @@ zl_tlv_port_id_new (uint8_t subtype,
   new_tlv->subtype = subtype;
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_port_id_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_port_id_serialize_ng;
   picky[FREE_FN].free = zl_tlv_port_id_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -257,7 +210,6 @@ zl_tlv_ttl_serialize (char *dst_buf,
                       const void *src_tlv)
 {
   int size;
-  uint16_t ttl_val;
   zl_tlv_cmn_t *common;
   zl_tlv_ttl_t *obj,
                ibuf;
@@ -274,8 +226,7 @@ zl_tlv_ttl_serialize (char *dst_buf,
 
   zl_tlv_common_serialize (common);
 
-  ttl_val = obj->value;
-  obj->value = htons (ttl_val);
+  obj->value = htons (obj->value);
 
   zl_memcpy (dst_buf, obj, size);
 
@@ -329,31 +280,7 @@ error:
 
 
 /* -- Port Description -- */
-int
-zl_tlv_port_desc_serialize (char *dst_buf,
-                            const void *src_tlv)
-{
-  int size;
-  zl_tlv_cmn_t *common;
-  zl_tlv_port_desc_t *obj,
-                     ibuf;
-
-  zl_ret_val_if_fail (dst_buf != NULL, 0);
-  zl_ret_val_if_fail (src_tlv != NULL, 0);
-
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
-
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_port_desc_t *)&ibuf;
-
-  size = sizeof(*common) + common->length;
-
-  zl_tlv_common_serialize (common);
-
-  zl_memcpy (dst_buf, obj, size);
-
-  return size;
-}
+#define zl_tlv_port_desc_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_port_desc_free (void *tlv)
@@ -389,7 +316,7 @@ zl_tlv_port_desc_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_port_desc_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_port_desc_serialize_ng;
   picky[FREE_FN].free = zl_tlv_port_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -406,31 +333,7 @@ error:
 
 
 /* -- System Name -- */
-int
-zl_tlv_sys_name_serialize (char *dst_buf,
-                           const void *src_tlv)
-{
-  int size;
-  zl_tlv_cmn_t *common;
-  zl_tlv_sys_name_t *obj,
-                    ibuf;
-
-  zl_ret_val_if_fail (dst_buf != NULL, 0);
-  zl_ret_val_if_fail (src_tlv != NULL, 0);
-
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
-
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_sys_name_t *)&ibuf;
-
-  size = sizeof(*common) + common->length;
-
-  zl_tlv_common_serialize (common);
-
-  zl_memcpy (dst_buf, obj, size);
-
-  return size;
-}
+#define zl_tlv_sys_name_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_sys_name_free (void *tlv)
@@ -466,7 +369,7 @@ zl_tlv_sys_name_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_sys_name_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_sys_name_serialize_ng;
   picky[FREE_FN].free = zl_tlv_sys_name_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -483,31 +386,7 @@ error:
 
 
 /* -- System Description -- */
-int
-zl_tlv_sys_desc_serialize (char *dst_buf,
-                           const void *src_tlv)
-{
-  int size;
-  zl_tlv_cmn_t *common;
-  zl_tlv_sys_desc_t *obj,
-                    ibuf;
-
-  zl_ret_val_if_fail (dst_buf != NULL, 0);
-  zl_ret_val_if_fail (src_tlv != NULL, 0);
-
-  zl_memcpy (&ibuf, src_tlv, sizeof(ibuf));
-
-  common = (zl_tlv_cmn_t *)&ibuf;
-  obj = (zl_tlv_sys_desc_t *)&ibuf;
-
-  size = sizeof(*common) + common->length;
-
-  zl_tlv_common_serialize (common);
-
-  zl_memcpy (dst_buf, obj, size);
-
-  return size;
-}
+#define zl_tlv_sys_desc_serialize_ng tlv_serialize_ng
 
 void
 zl_tlv_sys_desc_free (void *tlv)
@@ -543,7 +422,7 @@ zl_tlv_sys_desc_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_sys_desc_serialize;
+  picky[SERIALIZE_FN].serialize = zl_tlv_sys_desc_serialize_ng;
   picky[FREE_FN].free = zl_tlv_sys_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
