@@ -56,7 +56,12 @@ tlv_free_ng (void *tlv)
 }
 
 /* -- End Of LLDPDU -- */
-#define zl_tlv_end_lldpdu_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_end_lldpdu_serialize (char *dst_buf,
+                             const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_end_lldpdu_free (void *tlv)
@@ -80,7 +85,7 @@ zl_tlv_end_lldpdu_new (void)
   common->type = TLV_END_OF_LLDPDU;
   common->length = 0;
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_end_lldpdu_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_end_lldpdu_serialize;
   picky[FREE_FN].free = zl_tlv_end_lldpdu_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -97,7 +102,12 @@ error:
 
 
 /* -- Chassis ID -- */
-#define zl_tlv_chassis_id_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_chassis_id_serialize (char *dst_buf,
+                             const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_chassis_id_free (void *tlv)
@@ -129,7 +139,7 @@ zl_tlv_chassis_id_new (uint8_t subtype,
   new_tlv->subtype = subtype;
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_chassis_id_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_chassis_id_serialize;
   picky[FREE_FN].free = zl_tlv_chassis_id_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -146,7 +156,12 @@ error:
 
 
 /* -- Port ID -- */
-#define zl_tlv_port_id_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_port_id_serialize (char *dst_buf,
+                          const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_port_id_free (void *tlv)
@@ -178,7 +193,7 @@ zl_tlv_port_id_new (uint8_t subtype,
   new_tlv->subtype = subtype;
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_port_id_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_port_id_serialize;
   picky[FREE_FN].free = zl_tlv_port_id_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -264,7 +279,12 @@ error:
 
 
 /* -- Port Description -- */
-#define zl_tlv_port_desc_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_port_desc_serialize (char *dst_buf,
+                            const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_port_desc_free (void *tlv)
@@ -294,7 +314,7 @@ zl_tlv_port_desc_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_port_desc_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_port_desc_serialize;
   picky[FREE_FN].free = zl_tlv_port_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -311,7 +331,12 @@ error:
 
 
 /* -- System Name -- */
-#define zl_tlv_sys_name_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_sys_name_serialize (char *dst_buf,
+                           const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_sys_name_free (void *tlv)
@@ -341,7 +366,7 @@ zl_tlv_sys_name_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_sys_name_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_sys_name_serialize;
   picky[FREE_FN].free = zl_tlv_sys_name_free;
 
   object = zl_object_new_with_tlv_params (common,
@@ -358,7 +383,12 @@ error:
 
 
 /* -- System Description -- */
-#define zl_tlv_sys_desc_serialize_ng tlv_serialize_ng
+static inline int
+zl_tlv_sys_desc_serialize (char *dst_buf,
+                           const void *src_tlv)
+{
+  return tlv_serialize_ng (dst_buf, src_tlv);
+}
 
 static inline void
 zl_tlv_sys_desc_free (void *tlv)
@@ -388,7 +418,7 @@ zl_tlv_sys_desc_new (const uint8_t *src,
 
   zl_memcpy (new_tlv->value, src, nbytes);
 
-  picky[SERIALIZE_FN].serialize = zl_tlv_sys_desc_serialize_ng;
+  picky[SERIALIZE_FN].serialize = zl_tlv_sys_desc_serialize;
   picky[FREE_FN].free = zl_tlv_sys_desc_free;
 
   object = zl_object_new_with_tlv_params (common,
