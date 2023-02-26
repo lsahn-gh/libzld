@@ -70,6 +70,12 @@ zl_tlv_end_lldpdu_free (void *tlv)
 }
 
 zl_object_t *
+zl_tlv_end_lldpdu_deserialize (uint8_t *stream)
+{
+  return zl_tlv_end_lldpdu_new ();
+}
+
+zl_object_t *
 zl_tlv_end_lldpdu_new (void)
 {
   zl_object_t *object = NULL;
@@ -113,6 +119,25 @@ static inline void
 zl_tlv_chassis_id_free (void *tlv)
 {
   tlv_free_ng (tlv);
+}
+
+zl_object_t *
+zl_tlv_chassis_id_deserialize (uint8_t *stream)
+{
+  uint8_t type;
+  uint16_t length;
+  uint8_t subtype, *src;
+  size_t nbytes;
+
+  zl_ret_val_if_fail (stream != NULL, NULL);
+
+  stream += zl_tlv_header_deserialize_in_out (stream, &type, &length);
+
+  nbytes = length - 1;
+  subtype = *(uint8_t *)stream;
+  src = stream + 1;
+
+  return zl_tlv_chassis_id_new (subtype, src, nbytes);
 }
 
 zl_object_t *
@@ -167,6 +192,25 @@ static inline void
 zl_tlv_port_id_free (void *tlv)
 {
   tlv_free_ng (tlv);
+}
+
+zl_object_t *
+zl_tlv_port_id_deserialize (uint8_t *stream)
+{
+  uint8_t type;
+  uint16_t length;
+  uint8_t subtype, *src;
+  size_t nbytes;
+
+  zl_ret_val_if_fail (stream != NULL, NULL);
+
+  stream += zl_tlv_header_deserialize_in_out (stream, &type, &length);
+
+  nbytes = length - 1;
+  subtype = *(uint8_t *)stream;
+  src = stream + 1;
+
+  return zl_tlv_port_id_new (subtype, src, nbytes);
 }
 
 zl_object_t *
@@ -245,6 +289,20 @@ zl_tlv_ttl_free (void *tlv)
 }
 
 zl_object_t *
+zl_tlv_ttl_deserialize (uint8_t *stream)
+{
+  uint16_t src;
+
+  zl_ret_val_if_fail (stream != NULL, NULL);
+
+  stream += zl_tlv_header_deserialize_in (stream);
+
+  src = *(uint16_t *)stream;
+
+  return zl_tlv_ttl_new (src);
+}
+
+zl_object_t *
 zl_tlv_ttl_new (const uint16_t src)
 {
   zl_object_t *object = NULL;
@@ -290,6 +348,18 @@ static inline void
 zl_tlv_port_desc_free (void *tlv)
 {
   tlv_free_ng (tlv);
+}
+
+zl_object_t *
+zl_tlv_port_desc_deserialize (uint8_t *stream)
+{
+  uint16_t length;
+
+  zl_ret_val_if_fail (stream != NULL, NULL);
+
+  stream += zl_tlv_header_deserialize_in_out (stream, NULL, &length);
+
+  return zl_tlv_port_desc_new (stream, length);
 }
 
 zl_object_t *

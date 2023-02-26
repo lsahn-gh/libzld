@@ -72,6 +72,36 @@ zl_tlv_common_serialize (zl_tlv_cmn_t *common)
   *(uint16_t *)common = htons (val);
 }
 
+static inline int
+zl_tlv_header_deserialize_in_out (uint8_t *in_stream,
+                                  uint8_t *out_type,
+                                  uint16_t *out_length)
+{
+  uint16_t val = 0;
+
+  zl_ret_val_if_fail (in_stream != NULL, 0);
+
+  if (out_type || out_length) {
+    val = *(uint16_t *)in_stream;
+    val = ntohs (val);
+  }
+
+  if (out_type)
+    *out_type = (uint8_t)((val >> 9) & 0x007F);
+  if (out_length)
+    *out_length = (val & 0x01FF);
+
+  return sizeof(zl_tlv_cmn_t);
+}
+
+static inline int
+zl_tlv_header_deserialize_in (uint8_t *in_stream)
+{
+  zl_ret_val_if_fail (in_stream != NULL, 0);
+
+  return sizeof(zl_tlv_cmn_t);
+}
+
 /* -- Organizationally Specific TLV Type -- */
 typedef struct _zl_tlv_org_spec zl_tlv_org_spec_t;
 #define ZL_GET_ORG_SPEC_OBJ(ptr) ((zl_tlv_org_spec_t *)ptr)
