@@ -34,12 +34,12 @@ tlv_serialize_ng (char *dst_buf,
   zl_ret_val_if_fail (dst_buf != NULL, 0);
   zl_ret_val_if_fail (src_tlv != NULL, 0);
 
-  common = ZL_GET_TLV_COMMON_OBJ(src_tlv);
+  common = ZL_TLV_COMMON_TYPE(src_tlv);
   size = sizeof(*common) + common->length;
 
   zl_memcpy (stack, src_tlv, size);
 
-  common = ZL_GET_TLV_COMMON_OBJ(stack);
+  common = ZL_TLV_COMMON_TYPE(stack);
   zl_tlv_common_serialize (common);
 
   zl_memcpy (dst_buf, stack, size);

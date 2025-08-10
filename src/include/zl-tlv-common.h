@@ -50,16 +50,19 @@ enum
 };
 
 /* -- Common Type -- */
-typedef struct _zl_tlv_cmn_t zl_tlv_cmn_t;
-#define ZL_GET_TLV_COMMON_OBJ(ptr) ((zl_tlv_cmn_t *)ptr)
-
-struct _zl_tlv_cmn_t
+typedef struct __pack__
 {
-  uint8_t   type : 7;
-  uint16_t  length : 9;
-} zl_1byte_pack;
+  uint8_t   type    : 7;
+  uint16_t  length  : 9;
+} zl_tlv_cmn_t;
 
-static inline void
+__always_inline__ zl_tlv_cmn_t *
+ZL_TLV_COMMON_TYPE (const void *src)
+{
+  return (zl_tlv_cmn_t *)src;
+}
+
+__always_inline__ void
 zl_tlv_common_serialize (zl_tlv_cmn_t *common)
 {
   uint16_t val = 0;
@@ -73,16 +76,19 @@ zl_tlv_common_serialize (zl_tlv_cmn_t *common)
 }
 
 /* -- Organizationally Specific TLV Type -- */
-typedef struct _zl_tlv_org_spec zl_tlv_org_spec_t;
-#define ZL_GET_ORG_SPEC_OBJ(ptr) ((zl_tlv_org_spec_t *)ptr)
-
-struct _zl_tlv_org_spec
+typedef struct __pack__
 {
   zl_tlv_cmn_t  parent;
 
   uint8_t       oui[3];
   uint8_t       subtype;
-} zl_1byte_pack;
+} zl_tlv_org_spec_t;
+
+__always_inline__ zl_tlv_org_spec_t *
+ZL_TLV_ORG_SPEC_TYPE(const void *src)
+{
+  return (zl_tlv_org_spec_t *)src;
+}
 
 ZL_END_DECLS
 
