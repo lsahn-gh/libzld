@@ -68,9 +68,20 @@ zl_tlv_common_serialize (zl_tlv_cmn_t *common)
   *(uint16_t *)common = htons (val);
 }
 
+static inline void
+zl_tlv_common_init (zl_tlv_cmn_t *common,
+                    const uint8_t type,
+                    const uint16_t length)
+{
+  zl_ret_if_fail (common != NULL);
+
+  common->type = type;
+  common->length = length;
+}
+
 /* -- Organizationally Specific TLV Type -- */
 typedef struct _zl_tlv_org_spec zl_tlv_org_spec_t;
-#define ZL_GET_ORG_SPEC_OBJ(ptr) ((zl_tlv_org_spec_t *)ptr)
+#define ZL_TLV_ORG_SPEC_OBJ(ptr) ((zl_tlv_org_spec_t *)ptr)
 
 struct _zl_tlv_org_spec
 {
@@ -79,5 +90,18 @@ struct _zl_tlv_org_spec
   uint8_t       oui[3];
   uint8_t       subtype;
 } zl_1byte_pack;
+
+static inline void
+zl_tlv_org_spec_init (zl_tlv_org_spec_t *org,
+                      const uint8_t subtype)
+{
+  zl_ret_if_fail (org != NULL);
+
+  org->oui[0] = '\x00';
+  org->oui[1] = '\x80';
+  org->oui[2] = '\xC2';
+
+  org->subtype = subtype;
+}
 
 #endif

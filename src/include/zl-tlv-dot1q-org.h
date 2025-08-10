@@ -1,6 +1,6 @@
-/* zl-tlv-dot1q-org.h
+/** zl-tlv-dot1q-org.h
  *
- * Copyright 2020 Leesoo Ahn <yisooan@fedoraproject.org>
+ * Copyright 2025 Leesoo Ahn <lsahn@ooseel.net>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,8 @@
 #ifndef __ZL_TLV_DOT1Q_ORG_H__
 #define __ZL_TLV_DOT1Q_ORG_H__
 
+/* This implementation based on 2018 */
+
 #include <stdint.h>
 
 #include <priv/zl-macro.h>
@@ -25,21 +27,21 @@
 
 enum
 {
-  DOT1Q_SUB_RESERVED0 = 0,
-  DOT1Q_SUB_PORT_VLAN_ID,
-  DOT1Q_SUB_VLAN_NAME,
-  DOT1Q_SUB_PROTO_IDENTITY,
-  DOT1Q_SUB_VID_USAGE_DIGEST,
-  DOT1Q_SUB_MANAGEMENT_VID,
-  DOT1Q_SUB_RESERVED7, /* Annex F of IEEE Std 802.1AX-2014 [B12] */
-  DOT1Q_SUB_CONGESTION_NOTIFICATION,
-  DOT1Q_SUB_ETS_CONF_TLV,
-  DOT1Q_SUB_ETS_RECOMMENDATION_TLV = 0x0A,
-  DOT1Q_SUB_PRIORITY_BASED_FLOW_CONTROL_CONF_TLV = 0x0B,
-  DOT1Q_SUB_APPLICATION_PRIORITY_TLV = 0x0C,
-  DOT1Q_SUB_EVB_TLV = 0x0D,
-  DOT1Q_SUB_CDCP_TLV = 0x0E,
-  DOT1Q_SUB_APPLICATION_VLAN_TLV = 0x10
+  TLV_1Q_PORT_VLAN_ID = 1,
+  TLV_1Q_PORT_AND_PROTO_VLAN_ID,
+  TLV_1Q_VLAN_NAME,
+  TLV_1Q_PROTO_IDENTITY,
+  TLV_1Q_VID_USAGE_DIGEST,
+  TLV_1Q_MANAGEMENT_VID,
+  TLV_1Q_LINK_AGGREGATION,
+  TLV_1Q_CONGESTION_NOTIFICATION,
+  TLV_1Q_ETS_CONFIGURATION_TLV = 9,
+  TLV_1Q_ETS_RECOMMENDATION_TLV = 0xA,
+  TLV_1Q_PRIORITY_BASED_FLOW_CONTROL_CONF_TLV = 0xB,
+  TLV_1Q_APPLICATION_PRIORITY_TLV = 0xC,
+  TLV_1Q_EVB_TLV = 0xD,
+  TLV_1Q_CDCP_TLV = 0xE,
+  TLV_1Q_APPLICATION_VLAN_TLV = 0x10
 };
 
 /* -- Port VLAN ID -- */
@@ -220,6 +222,14 @@ struct _zl_tlv_cdcp
 {
   zl_tlv_org_spec_t parent;
 
+  /* since 7th octet */
+  uint8_t   role    : 1;
+  uint8_t   res1    : 3;
+  uint8_t   scomp   : 1;
+  uint16_t  res2    : 15;
+  uint16_t  chncap  : 12;
+  uint16_t  scid    : 12;
+  uint16_t  svid    : 12;
 } zl_1byte_pack;
 
 /* -- Application VLAN -- */
