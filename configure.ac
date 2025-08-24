@@ -1,13 +1,13 @@
-m4_define([api_cur], [0])
-m4_define([api_rev], [0])
-m4_define([api_age], [0])
-m4_define([api_version], [api_cur.api_rev.api_age])
+m4_define([api_major], [1])
+m4_define([api_minor], [0])
+m4_define([api_patch], [0])
+m4_define([api_version], [api_major.api_minor.api_patch])
 
 AC_INIT([libzld],
         [api_version],
-        [https://github.com/memnoth/libzld/issues],
+        [https://github.com/lsahn-gh/libzld/issues],
         [libzld-api_version],
-        [https://github.com/memnoth/libzld])
+        [https://github.com/lsahn-gh/libzld])
 
 AC_CONFIG_AUX_DIR([build-aux])
 
@@ -17,15 +17,12 @@ AC_PROG_CC
 
 LT_INIT([shared disable-static])
 
-AC_SUBST([API_MAJOR],[api_cur])
-AC_SUBST([API_MINOR],[api_rev])
-AC_SUBST([API_VERSION],[api_cur.api_rev])
+AC_SUBST([API_MAJOR],[api_major])
+AC_SUBST([API_MINOR],[api_minor])
+AC_SUBST([API_VERSION],[api_major.api_minor])
 AC_DEFINE_UNQUOTED(API_VERSION, [$API_VERSION], [API version])
-#AC_SUBST([LIBZLD_API_VERSION], [api_cur.api_rev.api_age])
 
-# API version based on libtool.
-# https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html
-AC_SUBST([LIBZLD_API_LIBTOOL], [api_cur:api_rev:api_age])
+AC_SUBST([LIBZLD_API_LIBTOOL], [api_major:api_minor:api_patch])
 
 AC_ARG_ENABLE([tests],
   AS_HELP_STRING([--enable-tests],[build tests directory]),
