@@ -26,7 +26,8 @@
 
 #include <zl-dlist.h>
 #include <zl-object.h>
-#include <zl-tlv-type.h>
+#include <zl-tlv-header.h>
+#include <zl-tlv-dot1ab.h>
 
 #define ETH_P_LLDP  0x88CC
 
@@ -65,7 +66,7 @@ int
 main (int argc,
       char *argv[])
 {
-  uint8_t buf[BUFSZ] = { 0, };
+  char buf[BUFSZ] = { 0, };
   zl_dlist_t lldp = ZL_DLIST_HEAD_INIT(lldp),
              *cursor = NULL,
              *n = NULL;
@@ -103,7 +104,7 @@ main (int argc,
   zl_dlist_enqueue (&lldp, ptr);
 
   str = "Summit300-48-Port 1001";
-  ptr = zl_tlv_port_desc_new (GET_VOID(str), strlen(str) + 1/*NULL term*/);
+  ptr = zl_tlv_port_desc_new (GET_VOID(str), strlen(str) + 1 /* NULL */);
   zl_dlist_enqueue (&lldp, ptr);
 
   str = "Summit300-48";
@@ -114,7 +115,7 @@ main (int argc,
   ptr = zl_tlv_sys_desc_new (GET_VOID(str), strlen(str) + 1);
   zl_dlist_enqueue (&lldp, ptr);
 
-  ptr = zl_tlv_sys_capabilities_new (0x0014, 0x0014);
+  ptr = zl_tlv_sys_caps_new (0x0014, 0x0014);
   zl_dlist_enqueue (&lldp, ptr);
 
   uint8_t mgmt_addr[] = { 0x00, 0x01, 0x30, 0xf9, 0xad, 0xa0 };
@@ -126,16 +127,18 @@ main (int argc,
   ptr = zl_tlv_end_lldpdu_new ();
   zl_dlist_enqueue (&lldp, ptr);
 
-  /* Serialize all the objects */
+  /* iterate on all objects */
   zl_dlist_foreach_safe (cursor, n, &lldp) {
-    zl_object_t *obj = ZL_GET_OBJECT (cursor);
+    zl_object_t *obj = ZL_OBJECT_TYPE (cursor);
 
+    /* serialize the TLVs into the buffer */
     size += zl_object_serialize_tlv (obj, buf+size);
 
-    /* Free */
-    zl_dlist_remove (cursor);
+    /* free */
+    zl_dlist_detach (cursor);
     zl_object_free (obj);
   }
 
+  /* flush to the net */
   return send_packet (buf, size);
 }
