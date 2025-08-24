@@ -15,16 +15,22 @@
  * limitations under the License.
  */
 
-#ifndef __ZL_MEM_H__
-#define __ZL_MEM_H__
+#ifndef ZL_MEM_H
+#define ZL_MEM_H
+
+#include "zl-compiler.h"
+
+ZL_BEGIN_DECLS
 
 #include <stdlib.h>
 
-void *  zl_malloc   (size_t size);
-void *  zl_calloc   (size_t nmemb, size_t size);
-void *  zl_realloc  (void *ptr, size_t size);
-void    zl_free     (void *ptr);
-void *  zl_memcpy   (void *dest, const void *src, size_t n);
-void *  zl_memdup   (void *src, size_t nbytes);
+void * zl_malloc  (size_t size);
+void * zl_calloc  (size_t nmemb, size_t size);
+void * zl_realloc (void *ptr, size_t size);
+void   zl_free    (void *ptr);
+void * zl_memcpy  (void *dest, const void *src, size_t n);
+void * zl_memdup  (void *src, size_t nbytes);
 
-#endif
+ZL_END_DECLS
+
+#endif /* ZL_MEM_H */

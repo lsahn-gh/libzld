@@ -5,9 +5,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,28 +15,33 @@
  * limitations under the License.
  */
 
-#ifndef __ZL_OBJECT_H__
-#define __ZL_OBJECT_H__
+#ifndef ZL_OBJECT_H
+#define ZL_OBJECT_H
 
-#include "zl-macro.h"
-#include "zl-tlv-common.h"
-
-#include "zl-bind.h"
+#include "priv/zl-compiler.h"
 
 ZL_BEGIN_DECLS
 
-typedef int (*fn_serialize_t) (char *, const void *);
-typedef void (*fn_free_t) (void *);
+#include "priv/zl-util.h"
 
-typedef struct
-{
+/**
+ * @brief Function pointer type for TLV serialization.
+ */
+typedef int   (*fn_serialize_t) (char * dest_buf, const void * src_tlv);
+
+/**
+ * @brief Function pointer type for TLV cleanup.
+ */
+typedef void  (*fn_free_t)      (void * tlv);
+
+typedef struct {
   union {
-    void *pointer;
+    void * out;
 
     fn_serialize_t serialize;
     fn_free_t free;
   };
-} zl_picky_t;
+} zl_box_t;
 
 enum
 {
@@ -45,23 +50,78 @@ enum
   N_FUNCTIONS,
 };
 
-/* -- Object Type -- */
+/**
+ * @brief Encapsulates a TLV object and its associated serialization
+ * and cleanup functions.
+ */
 typedef struct _zl_object_t zl_object_t;
 
-#define ZL_GET_OBJECT(ptr) ((zl_object_t *)ptr)
+/**
+ * @brief Casts a generic pointer to a zl_object_t pointer.
+ *
+ * @param obj Pointer to an object (const void *).
+ * @return zl_object_t* Converted object pointer.
+ */
+__forceinline__
+zl_object_t * ZL_OBJECT_TYPE (const void *obj)
+{
+  return (zl_object_t *)obj;
+}
 
-zl_object_t * zl_object_new                 (void);
+/**
+ * @brief Allocates a new zl_object_t object.
+ *
+ * @return zl_object_t* object pointer.
+ */
+zl_object_t * zl_object_new (void);
+
+/**
+ * @brief Allocates a new zl_object_t object with parameters.
+ *
+ * @param tlv Pointer to a TLV object (void *).
+ * @param serialize Pointer to a serialize function.
+ * @param free Pointer to a free function.
+ * @return zl_object_t* object pointer.
+ */
 zl_object_t * zl_object_new_with_tlv_params (void *tlv,
-                                             void *fn_serialize,
-                                             void *fn_free);
-void          zl_object_set_fn_serialize    (zl_object_t *object,
-                                             void *new_fn);
-void          zl_object_set_fn_free         (zl_object_t *object,
-                                             void *new_fn);
-int           zl_object_serialize_tlv       (zl_object_t *object,
-                                             char *out_buf);
-void          zl_object_free                (zl_object_t *object);
+                                             fn_serialize_t serialize,
+                                             fn_free_t free);
+
+/**
+ * @brief Sets a new serialize function to a zl_object_t object.
+ *
+ * @param self Pointer to the object.
+ * @param new_serialize Pointer to a new serialize function.
+ */
+void zl_object_set_serialize (zl_object_t *self,
+                              fn_serialize_t new_serialize);
+
+/**
+ * @brief Sets a new free function to a zl_object_t object.
+ *
+ * @param self Pointer to the object.
+ * @param new_free Pointer to a new free function.
+ */
+void zl_object_set_free (zl_object_t *self,
+                         fn_free_t new_free);
+
+/**
+ * @brief Serializes a TLV object to a buffer.
+ *
+ * @param self Pointer to the object.
+ * @param out_buf Pointer to the buffer.
+ * @return int Written bytes to the buffer.
+ */
+int zl_object_serialize_tlv (zl_object_t *self,
+                             char *out_buf);
+
+/**
+ * @brief Frees a TLV and zl_object_t object itself.
+ *
+ * @param self Pointer to the object.
+ */
+void zl_object_free (zl_object_t *self);
 
 ZL_END_DECLS
 
-#endif
+#endif /* ZL_OBJECT_H */
