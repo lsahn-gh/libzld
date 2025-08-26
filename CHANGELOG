@@ -1,0 +1,15 @@
+Changelog
+=========
+
+All notable changes to this project will documented in this file.
+This format follows Semantic Versioning: https://semver.org
+
+============================================================
+Version 1.0.0 - 2025-08-24
+============================================================
+Added:
+  - VERSION file
+
+Changed:
+  - Refactor the entire code
+  - README file
